@@ -1,0 +1,45 @@
+{
+  "ProjectName": "CKP.Mobile",
+  "ProjectGuid": "c1824fff-645d-491d-b5e0-51538f0ba592",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.CKPMobile",
+  "DisplayName": "CKP.Mobile",
+  "Author": "",
+  "Description": "CKP.Mobile",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "3.7.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "false",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{7effaeea-af91-4ef5-9ea8-0a1fe17fdb49}",
+  "WP8ProductID": "{b21e45e9-5d94-46b5-826d-b03175d651c1}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.CKPMobile",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}

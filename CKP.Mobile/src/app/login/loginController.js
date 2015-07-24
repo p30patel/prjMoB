@@ -1,9 +1,8 @@
 'use strict';
 app.controller('loginController',
-        ['$scope', '$http', '$location', 'authService', 'translateService', 'localStorageService', 'Page', 'loginDataService', '$q','$timeout',
-function ($scope, $http, $location, authService, translateService, localStorageService, page, loginDataService, $q, $timeout) {
-    page.setTitle('Login ....');
-
+        ['$scope', '$http', '$location', 'authService', 'translateService', 'localStorageService',  'loginDataService', '$q','$timeout',
+function ($scope, $http, $location, authService, translateService, localStorageService, loginDataService, $q, $timeout) {
+   
     //login page html lables
     $scope.form = {};
     $scope.form.login = {};

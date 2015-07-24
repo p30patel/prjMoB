@@ -1,92 +1,78 @@
 
 'use strict';
 
-app.factory("homeDataService",
-    ["$http", "$q", "localStorageService", "ngAuthSettings",
-    function ($http, $q, localStorageService, ngAuthSettings) {
+app.factory("homeDataService", [
+                "$http", "$q", "localStorageService", "ngAuthSettings",
+                function ($http, $q, localStorageService, ngAuthSettings) {
+                    var authServiceBase = ngAuthSettings.authServiceBaseUri;
+                    var homeDataServiceFactory = {};
 
-        var authServiceBase = ngAuthSettings.authServiceBaseUri;
-        var homeDataServiceFactory = {};
-   
+                    var forceGetOrderCounts = function () {
+                        var deferred = $q.defer();
+                        var url = authServiceBase + "webapi/api/core/MobileApp/GetMessageListTaskAsync?userId=" + 1;
+                        $http.get(url).success(function (result) {
+                            alert(result.length);
+                            localStorageService.set('orderCount', result);
+                            deferred.resolve(result);
+                        }).error(function (err, status) {
+                            deferred.reject(err);
+                        });
 
-        var forceGetOrderCounts = function () {
-            var deferred = $q.defer();
-            var url = authServiceBase + "webapi/api/core/MobileApp/GetMessageListTaskAsync?userId=" + 1;
-            $http.get(url).success(function (result) {
-                alert(result.length);
-                localStorageService.set('orderCount', result);
-                deferred.resolve(result);
-            }).error(function (err, status) {
+                        return deferred.promise;
+                    };
 
-                deferred.reject(err);
-            });
-
-            return deferred.promise;
-        };
-
-        var getOrderCounts = function () {
-         
-            var deferred = $q.defer();
+                    var getOrderCounts = function () {
+                        var deferred = $q.defer();
           
-            var orderCountData = localStorageService.get('orderCount');
+                        var orderCountData = localStorageService.get('orderCount');
           
-            if (orderCountData) {
-             
-                deferred.resolve(orderCountData);
-            }
-            else {
-                forceGetOrderCounts().then(function (result) {
-                    deferred.resolve(result);
-                });
-            }
+                        if (orderCountData) {
+                            deferred.resolve(orderCountData);
+                        } else {
+                            forceGetOrderCounts().then(function (result) {
+                                deferred.resolve(result);
+                            });
+                        }
 
-            return deferred.promise;
-        };
+                        return deferred.promise;
+                    };
 
-      
-
-        var forceGetOrderHeaderData = function () {
-            var deferred = $q.defer();
+                    var forceGetOrderHeaderData = function () {
+                        var deferred = $q.defer();
             
-            var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderHeaderDataTaskAsync?userId=" + 1 + "&client_id=" + ngAuthSettings.clientId;
-            $http.get(url).success(function (result) {
-                localStorageService.set('orderHeaderData', result);
-                deferred.resolve(result);
-            }).error(function (err, status) {
+                        var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderHeaderDataTaskAsync?userId=" + 1 + "&client_id=" + ngAuthSettings.clientId;
+                        $http.get(url).success(function (result) {
+                            localStorageService.set('orderHeaderData', result);
+                            deferred.resolve(result);
+                        }).error(function (err, status) {
+                            deferred.reject(err);
+                        });
 
-                deferred.reject(err);
-            });
+                        return deferred.promise;
+                    };
 
-            return deferred.promise;
-        };
+                    var getOrderHeaderData = function () {
+                        var deferred = $q.defer();
 
+                        var orderHeaderData = localStorageService.get('orderHeaderData');
 
-        var getOrderHeaderData = function () {
+                        if (orderHeaderData) {
+                            deferred.resolve(orderHeaderData);
+                        } else {
+                            forceGetOrderHeaderData().then(function (result) {
+                                deferred.resolve(result);
+                            });
+                        }
 
-            var deferred = $q.defer();
+                        return deferred.promise;
+                    };
 
-            var orderHeaderData = localStorageService.get('orderHeaderData');
+                    homeDataServiceFactory.getOrderCounts = getOrderCounts;
+                    homeDataServiceFactory.forceGetOrderCounts = forceGetOrderCounts;
 
-            if (orderHeaderData) {
+                    homeDataServiceFactory.getOrderHeaderData = getOrderHeaderData;
+                    homeDataServiceFactory.forceGetOrderHeaderData = forceGetOrderHeaderData;
 
-                deferred.resolve(orderHeaderData);
-            }
-            else {
-               forceGetOrderHeaderData().then(function (result) {
-                    deferred.resolve(result);
-                });
-            }
-
-            return deferred.promise;
-        };
-
-
-        homeDataServiceFactory.getOrderCounts = getOrderCounts;
-        homeDataServiceFactory.forceGetOrderCounts = forceGetOrderCounts;
-
-
-        homeDataServiceFactory.getOrderHeaderData = getOrderHeaderData;
-        homeDataServiceFactory.forceGetOrderHeaderData = forceGetOrderHeaderData;
-
-        return homeDataServiceFactory;
-    }]);
+                    return homeDataServiceFactory;
+                }
+            ]);

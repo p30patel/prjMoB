@@ -9,3 +9,10 @@ var app = angular.module('app',
       clientId: clientId
   });
 
+app.run(['authService', function (authService) {
+    authService.fillAuthData();
+}]);
+
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
+});

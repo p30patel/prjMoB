@@ -1,8 +1,6 @@
 <kendo-mobile-view k-title="'{{title}}'" ng-controller="loginController">
- 
-
-
-<h4> {{form.login.resoruceValue}}</h4>
+<div class="container">
+    <br>
 <!--<h4>Login</h4>-->
 <select ng-model="selectedLanague"  ng-change="translatePage()" ng-options="language.Culture as language.Name for language in languages" ng-init="selectedLanague = selectedLanague || 'en-US'">
 </select>
@@ -106,5 +104,5 @@
         </div>
     </form>
 </modal>
-    
+    </div> 
     </kendo-mobile-view>

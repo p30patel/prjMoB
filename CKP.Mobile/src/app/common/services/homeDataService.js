@@ -9,9 +9,9 @@ app.factory("homeDataService", [
 
                     var forceGetOrderCounts = function () {
                         var deferred = $q.defer();
-                        var url = authServiceBase + "webapi/api/core/MobileApp/GetMessageListTaskAsync?userId=" + 1;
+                        var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderCountsTaskAsync?userId=" + 1;
                         $http.get(url).success(function (result) {
-                            alert(result.length);
+                           
                             localStorageService.set('orderCount', result);
                             deferred.resolve(result);
                         }).error(function (err, status) {

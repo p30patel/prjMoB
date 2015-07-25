@@ -14,7 +14,7 @@
         <script src="kendo/js/jquery.min.js"></script>
 
         <script src="src/vendor/angular.js"></script>
-       <!--    <script src="src/vendor/angular-route.js"></script>-->
+        <!--    <script src="src/vendor/angular-route.js"></script>-->
         <script src="src/vendor/angular-local-storage.js"></script>
 
         <script src="kendo/js/kendo.mobile.min.js"></script>
@@ -32,6 +32,9 @@
         <script src="src/app/common/services/indexDataService.js"></script>
         <script src="src/app/common/services/loginDataService.js"></script>
         <script src="src/app/common/services/translateService.js"></script>
+        <script src="src/app/common/services/alerting.js"></script>
+        <script src="src/app/common/directives/alerting.js"></script>
+         <script src="src/app/common/directives/components.js"></script>
 
         <!-- app scripts -->
 
@@ -56,18 +59,33 @@
                         <span class="km-text"><i class="icon ion-navicon-round"></i> Menu</span>
                     </a>
                     <kendo-view-title></kendo-view-title>
-                    <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>
+                  <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
                 </kendo-mobile-nav-bar>
             </kendo-mobile-header>
 
             <!-- application views will be rendered here -->
-
+            <kendo-mobile-footer>
+                   <kendo-mobile-nav-bar>
+                  <alerts></alerts></kendo-mobile-nav-bar>
+            </kendo-mobile-footer>
         </kendo-mobile-layout>
 
         <!-- application drawer and contents -->
         <kendo-mobile-drawer id="right-drawer" style="width: 270px" k-title="'{{menu.title}}'" ng-controller="menuController">
             <kendo-mobile-header>
                 <kendo-mobile-nav-bar>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a ng-show="!authentication.isAuth" ng-click="mnuClick('login')">
+                                <span class="glyphicon glyphicon-log-in"></span>Login
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" ng-show="authentication.isAuth" ng-click="logout()">
+                                Logged as <b>{{authentication.userName}} </b><span class="glyphicon glyphicon-off"></span>
+                            </a>
+                        </li>
+                    </ul>
                     <kendo-view-title></kendo-view-title>
                 </kendo-mobile-nav-bar>
             </kendo-mobile-header>
@@ -111,7 +129,11 @@
 
             </ul>
         </kendo-mobile-drawer>
-
+<script>document.addEventListener('deviceready', function () {
+   feedback.initialize('7c882340-3274-11e5-a28d-c9df925f448c'); // Replace with your API key
+  
+});
+ </script>
     </body>
 
 </html>

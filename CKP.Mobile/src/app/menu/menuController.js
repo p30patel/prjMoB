@@ -1,5 +1,5 @@
 app.controller('menuController', [
-                   '$scope', '$location', function($scope) {
+                   '$scope', 'authService', function($scope, authService) {
                        $scope.menu = {};
                        $scope.menu.title = 'Check-Net';
                        $scope.menu.contactus = "Contact Us";
@@ -9,20 +9,24 @@ app.controller('menuController', [
                        $scope.menu.help = "Help";
                        $scope.menu.notificationSettings = "Notification Settings";
                        $scope.menu.feedback = "Feedback";
-                    
-                     /*  $scope.mnuClick = function(viewName) {
+                       
+                       $scope.authentication = authService.authentication;
+
+                       //logout
+                       $scope.logout = function () {
+                           authService.logout();
+                           window.analytics.End();
+                           kendo.mobile.application.navigate("src/app/login/login.html");
+                       }
+                       $scope.mnuClick = function(viewName) {
                            switch (viewName) {
-                               
-                               case "contactus"                               
-                               : 
-                               kendoapp.navigate("src/app/faq/faq.html");
-                               
-                               break;
+                               case "login":
+                                    kendo.mobile.application.navigate("src/app/login/login.html");
+                                   break;
                                default :
-                             
-                               kendo.mobile.application.navigate("src/app/login/login.html");
-                               break;
+                                   kendo.mobile.application.navigate("src/app/login/login.html");
+                                   break;
                            }
                        }
-*/                   }
+                   }
                ]);

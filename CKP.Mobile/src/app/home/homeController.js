@@ -3,11 +3,13 @@ app.controller('homeController', [
                    '$scope', '$http', '$location', 'authService', 'localStorageService', '$timeout', 'homeDataService',
                    function($scope, $http, $location, authService, localStorageService, $timeout, homeDataService) {
                        var init = function() {
+                             
                            if (!authService.authentication.isAuth) {
                                authService.logout();
                               
                                kendo.mobile.application.navigate("src/app/login/login.html");
                            }
+                             
                        };
                        init();
                        $scope.title = 'home page';
@@ -95,9 +97,11 @@ app.controller('homeController', [
                        };
 
                        var getOrderCounts = function () {
+                            kendo.mobile.application.pane.loader.show();
                            homeDataService.getOrderCounts().then(function (result) {
                                $scope.orderCounts = result;
                                $scope.message = "Completed Order Counts";
+                                kendo.mobile.application.pane.loader.hide();
                                angular.element($scope.activeTabId).trigger('click');
                                if ($scope.activeTabId !== "") {
                                    angular.element($scope.activeTabId).trigger('click');

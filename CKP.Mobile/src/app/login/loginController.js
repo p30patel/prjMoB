@@ -1,8 +1,9 @@
 'use strict';
 app.controller('loginController', [
-                   '$scope', '$http', '$location', 'authService', 'translateService', 'localStorageService',  'loginDataService', '$q','$timeout',
-                   function ($scope, $http, $location, authService, translateService, localStorageService, loginDataService, $q, $timeout) {
+                   '$scope', '$http', '$location', 'authService', 'translateService', 'localStorageService',  'loginDataService', '$q','$timeout','alerting',
+                   function ($scope, $http, $location, authService, translateService, localStorageService, loginDataService, $q, $timeout, alerting) {
                        $scope.title = 'Login';
+                       alerting.addDanger("Please Login");
                        //login page html lables
                        $scope.form = {};
                        $scope.form.login = {};
@@ -49,7 +50,6 @@ app.controller('loginController', [
 
                        var languages = function () {
                            $scope.languages = [{ Name: "English", Culture: "en-US", Id: 1, Error: "" }];
-                           ;
        
                            var languageData = localStorageService.get('languageData');
         
@@ -65,6 +65,7 @@ app.controller('loginController', [
                            }
                        };
                        languages(); //init langguages
+                       
 
                        $scope.loginData = {
                            userName: "",
@@ -92,7 +93,7 @@ app.controller('loginController', [
 
                        //loign event
                        $scope.login = function () {
-                           $('#isLoading').show();
+                           kendo.mobile.application.pane.loader.show();
                            $scope.passwordHint = "";
                            authService.login($scope.loginData).then(function (response) {
                                kendo.mobile.application.navigate("src/app/home/home.html");
@@ -100,30 +101,32 @@ app.controller('loginController', [
                                                                     function (err) {
                                                                         $scope.message = err.error_description;
                                                                     }).finally(function () {
-                                                                        $('#isLoading').hide();
+                                                                        kendo.mobile.application.pane.loader.hide();
                                                                     });
                        };
 
                        $scope.showPasswordHint = function () {
-                           $('#isLoading').show();
+                           kendo.mobile.application.pane.loader.show();
                            var username = $scope.loginData.userName;
                            loginDataService.getPasswordHint(username, email).then(function (result) {
                                $scope.passwordHint = result;
-                               $('#isLoading').hide();
+                               alerting.addSuccess('Hint is : ' + result);
+                               kendo.mobile.application.pane.loader.hide();
                            });
                        };
  
                        $scope.sendPassword = function () {
-                           $('#isLoading').show();
+                           kendo.mobile.application.pane.loader.show();
                            var username = 'rjmarshallca'; //for test - else use  $scope.loginData.userName;
                            var email = $scope.forgotpassword.email;
                            loginDataService.resetPassword(username, email).then(function(result) {
                                $scope.forgotpassword.message = result;
+                               alerting.addSuccess(result);
                            },
                                                                                 function (err) {
                                                                                     $scope.forgotpassword.message = err.error_description;
                                                                                 }).finally(function () {
-                                                                                    $('#isLoading').hide();
+                                                                                    kendo.mobile.application.pane.loader.hide();
                                                                                 });
                        };
                    }

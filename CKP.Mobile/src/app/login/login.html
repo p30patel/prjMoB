@@ -78,31 +78,9 @@
 
     </div>
 </form>
-<modal title="Forgot Password" visible="showModal">
-    <form role="form" name="frmForgotPassword" novalidate ng-submit="sendPassword()">
-   
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" placeholder="Enter emailaddress" name="email" id="email" ng-model="forgotpassword.email"/>
-            <div ng-show="frmForgotPassword.email.$invalid && frmForgotPassword.email.$touched">
-                <br/>
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-ok" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    Valid email address is required!
-                </div>
-            </div>
-        </div>
-        <button type="submit" ng-disabled="frmForgotPassword.$invalid || frmForgotPassword.$pending" class="btn btn-primary">Get New Password</button>
-        <div ng-show="forgotpassword.message && !(frmForgotPassword.email.$invalid && frmForgotPassword.email.$touched)">
-            <br/>
-            <div class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span>
-                {{forgotpassword.message}}
-            </div>
-        </div>
-    </form>
-</modal>
-    </div> 
-    </kendo-mobile-view>
+
+ </div></kendo-mobile-view>
+
+
+  
+  

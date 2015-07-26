@@ -15,7 +15,7 @@ app.controller('menuController', [
                        //logout
                        $scope.logout = function () {
                            authService.logout();
-                           window.analytics.End();
+                          
                            kendo.mobile.application.navigate("src/app/login/login.html");
                        }
                        $scope.mnuClick = function(viewName) {

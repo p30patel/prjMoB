@@ -1,9 +1,10 @@
 'use strict';
 app.controller('loginController', [
-                   '$scope', '$http', '$location', 'authService', 'translateService', 'localStorageService',  'loginDataService', '$q','$timeout','alerting',
-                   function ($scope, $http, $location, authService, translateService, localStorageService, loginDataService, $q, $timeout, alerting) {
+                   '$scope', '$http', '$location', 'authService', 'translateService', 'localStorageService',  'loginDataService', '$q','$timeout','alerting','$filter',
+                   function ($scope, $http, $location, authService, translateService, localStorageService, loginDataService, $q, $timeout, alerting, $filter) {
                        $scope.title = 'Login';
                        alerting.addDanger("Please Login");
+                     
                        //login page html lables
                        $scope.form = {};
                        $scope.form.login = {};
@@ -66,6 +67,14 @@ app.controller('loginController', [
                        };
                        languages(); //init langguages
                        
+                       //pull to refresh
+                       $scope.refresh = function() {
+                           var currentDate = $filter('date')(new Date(), 'dd-MMM-yy HH:mm:ss');
+                           alerting.addSuccess("Last updated " + currentDate);
+                           $timeout(function() {
+                               $scope.scroller.pullHandled();
+                           }, 400);
+                       };  //pull to refresh end
 
                        $scope.loginData = {
                            userName: "",
@@ -108,7 +117,7 @@ app.controller('loginController', [
                        $scope.showPasswordHint = function () {
                            kendo.mobile.application.pane.loader.show();
                            var username = $scope.loginData.userName;
-                           loginDataService.getPasswordHint(username, email).then(function (result) {
+                           loginDataService.getPasswordHint(username).then(function (result) {
                                $scope.passwordHint = result;
                                alerting.addSuccess('Hint is : ' + result);
                                kendo.mobile.application.pane.loader.hide();

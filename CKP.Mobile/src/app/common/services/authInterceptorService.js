@@ -4,21 +4,26 @@ app.factory('authInterceptorService', ['$q', '$location','$injector',
 
 
     var authInterceptorServiceFactory = {};
-
+    var alerting = $injector.get("alerting");
     var request = function (config) {
-       
+          
         config.headers = config.headers || {};
-
+        
         var authData = localStorageService.get('authorizationData');
         if (authData) {
             config.headers.Authorization = 'Bearer ' + authData.token ;
         }
-
+       
         return config;
     }
+       var response= function (response) {
+  
+            return response || $q.when(response);
+
+        }
 
     var responseError = function (rejection) {
-        var alerting = $injector.get("alerting");
+       
        
         if (rejection.status === 401) {
             var authService = $injector.get('authService');
@@ -43,6 +48,7 @@ app.factory('authInterceptorService', ['$q', '$location','$injector',
     }
 
     authInterceptorServiceFactory.request = request;
+    authInterceptorServiceFactory.response = response;
     authInterceptorServiceFactory.responseError = responseError;
 
     return authInterceptorServiceFactory;

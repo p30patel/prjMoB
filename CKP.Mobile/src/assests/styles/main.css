@@ -1,4 +1,7 @@
 .km-drawer-button:before, .km-drawer-button:after  { content: "\E077"; }
+.km-footer {
+    font-size : 9px;
+}
 .loading {
   position: fixed;
   z-index: 999;
@@ -22,6 +25,25 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.3);
+}
+#loaderDiv {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   z-index: 1100;
+   background-color: white;
+   opacity: .6;
+}
+
+.ajax-loader {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   margin-left: -32px; /* -1 * image width / 2 */
+   margin-top: -32px; /* -1 * image height / 2 */
+   display: block;
 }
 
 /* :not(:required) hides these rules from IE9 and below */

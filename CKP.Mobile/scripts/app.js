@@ -12,6 +12,7 @@ var app = angular.module('app',
 
 app.run(['authService', function (authService) {
     authService.fillAuthData();
+  
 }]);
 
 app.config(function ($httpProvider) {

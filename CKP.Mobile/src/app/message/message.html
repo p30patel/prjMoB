@@ -1,0 +1,11 @@
+<kendo-mobile-view k-title="'{{title}}'" ng-controller="messageController" >
+     <a href="" class="k-icon k-i-close" k-align="'right'" ng-click="messageClose()">&nbsp;</a>
+    <div class='container'><br>
+                <div ng-show="mesages" ng-repeat="message in mesages">
+                    <h5>{{message.Name}}</h5>
+                    <p>({{message.HolidayDescription}}) closed on {{ message.StartDate | date}} - {{message.EndDate | date}} </p>
+                    <hr/>
+                </div>
+                <div ng-show="!mesages">No Messages are found!</div>
+        </div>
+</kendo-mobile-view>

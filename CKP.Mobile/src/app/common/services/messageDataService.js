@@ -1,13 +1,13 @@
 
 'use strict';
 
-app.factory("menuDataService",
+app.factory("messageDataService",
     ["$http", "$q", "localStorageService", "ngAuthSettings", "authService", "$location",
 function ($http, $q, localStorageService, ngAuthSettings, authService, $location) {
 
     var authServiceBase = ngAuthSettings.authServiceBaseUri;
 
-    var menuDataServiceFactory = {};
+    var messageDataServiceFactory = {};
 
     var forceGetMessages = function (retailerId) {
         var deferred = $q.defer();
@@ -41,8 +41,8 @@ function ($http, $q, localStorageService, ngAuthSettings, authService, $location
         return deferred.promise;
     }
 
-    menuDataServiceFactory.getMessages = getMessages;
-    menuDataServiceFactory.forceGetMessages = forceGetMessages;
+    messageDataServiceFactory.getMessages = getMessages;
+    messageDataServiceFactory.forceGetMessages = forceGetMessages;
 
-    return menuDataServiceFactory;
+    return messageDataServiceFactory;
 }]);

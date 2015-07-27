@@ -28,7 +28,7 @@
         <script src="scripts/app.js"></script>
         <script src="src/app/common/services/authInterceptorService.js"></script>
         <script src="src/app/common/services/authService.js"></script>
-        <script src="src/app/common/services/menuDataService.js"></script>
+        <script src="src/app/common/services/messageDataService.js"></script>
         <script src="src/app/common/services/homeDataService.js"></script>
         <script src="src/app/common/services/indexDataService.js"></script>
         <script src="src/app/common/services/loginDataService.js"></script>
@@ -44,6 +44,7 @@
         <script src="src/app/home/homeController.js"></script>
         <script src="src/app/contactus/contactusController.js"></script>
         <script src="src/app/faq/faqController.js"></script>
+         <script src="src/app/message/messageController.js"></script>
 
         <script src="src/app/feedback/feedbackController.js"></script>
         <script src="src/app/help/helpController.js"></script>
@@ -60,20 +61,13 @@
                         <span class="km-text"><i class="icon ion-navicon-round"></i> Menu</span>
                     </a>
                     <kendo-view-title></kendo-view-title>
-                    <a href="#" class="k-icon k-i-note" k-align="'right'" ng-click="messageModalToggle()">&nbsp;</a>
+                    <a href="" class="k-icon k-i-note" k-align="'right'" ng-show="authentication.isAuth" ng-click="mnuClick('message')">&nbsp;</a>
 
                     <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
                 </kendo-mobile-nav-bar>
 
             </kendo-mobile-header>
-            <modal title="News & Alerts" visible="showMessageModal">
-                <div ng-show="mesages" ng-repeat="message in mesages">
-                    <h5>{{message.Name}}</h5>
-                    <p>({{message.HolidayDescription}}) closed on {{ message.StartDate | date}} - {{message.EndDate | date}} </p>
-                    <hr/>
-                </div>
-                <div ng-show="!mesages">No Messages are found!</div>
-            </modal>
+           
 
             <!-- application views will be rendered here -->
             <kendo-mobile-footer>

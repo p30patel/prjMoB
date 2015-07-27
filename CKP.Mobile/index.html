@@ -8,7 +8,7 @@
         <link href="kendo/styles/kendo.common.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="src/assests/styles/bootstrap.css">
         <link href="src/assests/styles/main.css" rel="stylesheet" />
-         <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.default.min.css">
+        <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.default.min.css">
         <script src="cordova.js"></script>
 
         <script src="kendo/js/jquery.min.js"></script>
@@ -28,14 +28,15 @@
         <script src="scripts/app.js"></script>
         <script src="src/app/common/services/authInterceptorService.js"></script>
         <script src="src/app/common/services/authService.js"></script>
+        <script src="src/app/common/services/menuDataService.js"></script>
         <script src="src/app/common/services/homeDataService.js"></script>
         <script src="src/app/common/services/indexDataService.js"></script>
         <script src="src/app/common/services/loginDataService.js"></script>
         <script src="src/app/common/services/translateService.js"></script>
         <script src="src/app/common/services/alerting.js"></script>
         <script src="src/app/common/directives/alerting.js"></script>
-         <script src="src/app/common/directives/components.js"></script>
-         
+        <script src="src/app/common/directives/components.js"></script>
+
         <!-- app scripts -->
 
         <script src="src/app/menu/menuController.js"></script>
@@ -52,21 +53,35 @@
     </head>
     <body kendo-mobile-application ng-app="app" k-layout="'main'" k-initial="'src/app/home/home.html'" k-hash-bang="true">
 
-        <kendo-mobile-layout k-id="'main'">
-            <kendo-mobile-header ng-controller="menuController">
+        <kendo-mobile-layout k-id="'main'" ng-controller="menuController">
+            <kendo-mobile-header >
                 <kendo-mobile-nav-bar>
                     <a kendo-mobile-button="" k-align="'left'" href="#right-drawer" k-rel="'drawer'" data-role="button" class="km-widget km-button" data-rel="drawer" data-align="left">
                         <span class="km-text"><i class="icon ion-navicon-round"></i> Menu</span>
                     </a>
                     <kendo-view-title></kendo-view-title>
-                  <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
+                    <a href="#" class="k-icon k-i-note" k-align="'right'" ng-click="messageModalToggle()">&nbsp;</a>
+
+                    <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
                 </kendo-mobile-nav-bar>
+
             </kendo-mobile-header>
+            <modal title="News & Alerts" visible="showMessageModal">
+                <div ng-show="mesages" ng-repeat="message in mesages">
+                    <h5>{{message.Name}}</h5>
+                    <p>({{message.HolidayDescription}}) closed on {{ message.StartDate | date}} - {{message.EndDate | date}} </p>
+                    <hr/>
+                </div>
+                <div ng-show="!mesages">No Messages are found!</div>
+            </modal>
 
             <!-- application views will be rendered here -->
             <kendo-mobile-footer>
-                   <kendo-mobile-nav-bar>
-                 <p> <alerts></alerts></p></kendo-mobile-nav-bar>
+                <kendo-mobile-nav-bar>
+                    <p>
+                        <alerts></alerts>
+                    </p>
+                </kendo-mobile-nav-bar>
             </kendo-mobile-footer>
         </kendo-mobile-layout>
 
@@ -129,12 +144,11 @@
 
             </ul>
         </kendo-mobile-drawer>
-        
-<script>document.addEventListener('deviceready', function () {
-   feedback.initialize('7c882340-3274-11e5-a28d-c9df925f448c'); // Replace with your API key
-  
-});
- </script>
+
+        <script>document.addEventListener('deviceready', function () {
+            feedback.initialize('7c882340-3274-11e5-a28d-c9df925f448c'); // Replace with your API key
+        });
+        </script>
     </body>
 
 </html>

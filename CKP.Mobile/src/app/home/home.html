@@ -1,15 +1,18 @@
 <kendo-mobile-view k-title="'{{title}}'" ng-controller="homeController">
+     <div kendo-mobile-scroller="scroller" k-pull-to-refresh="true" k-pull="refresh" style="height: 600px">
 <div class="container">
   <br>
-
-<div class="footer" ng-show="message"><b>Status :</b> {{message}}
-</div>
 
 <div class="search">
     {{Search.SalesOrder}}
 
         <div class="text-right">
             <ul class="nav navbar-nav">
+               
+            </ul>
+        </div>
+        <div class="">
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectedPara}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -20,15 +23,13 @@
 
                     </ul>
                 </li>
-            </ul>
-        </div>
-        <div class="">
-
-            <div class="btn-group">
-              <input type="text" class="form-control" placeholder="Search" ng-model="searchValue" ng-keypress="key($event)"/>
-                <i class="searchclear" ng-show="!searchValue"></i>
-                  <span  ng-show="searchValue" ng-click="clearSearch()">x</span>
-            </div>
+               <span class="k-textbox k-space-right" style="width: 90%;" >                   
+                    <input type="text" id="icon-right"  ng-model="searchValue" ng-keypress="key($event)"/>
+                    <a href="#" class="k-icon k-i-search" ng-show="!searchValue">&nbsp;</a>
+                    <a href="#" class="k-icon k-i-cancel"  ng-show="searchValue" ng-click="clearSearch()" k-align="'right'" >&nbsp;</a>
+                  
+                </span>
+           
 
         </div>
    
@@ -134,4 +135,6 @@
 
 </div>
 </div>
+</div>
+    
 </kendo-mobile-view>

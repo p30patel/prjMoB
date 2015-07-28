@@ -1,118 +1,113 @@
 <kendo-mobile-view k-title="'{{title}}'" ng-controller="loginController">
     <div kendo-mobile-scroller="scroller" k-pull-to-refresh="true" k-pull="refresh" style="height: 600px">
-  
- 
-<div class="container">
-    <br>
-<!--<h4>Login</h4>-->
-<select ng-model="selectedLanague"  ng-change="translatePage()" ng-options="language.Culture as language.Name for language in languages" ng-init="selectedLanague = selectedLanague || 'en-US'">
-</select>
-{{selectedLanague}}
 
+        <div class="container">
+            <br>
+            <!--<h4>Login</h4>-->
+            <select ng-model="selectedLanague"  ng-change="translatePage()" ng-options="language.Culture as language.Name for language in languages" ng-init="selectedLanague = selectedLanague || 'en-US'">
+            </select>
+            {{selectedLanague}}
 
-<form class="form-horizontal" name="loginForm" novalidate ng-submit="login()">
-    <div class="form-group">
-        <hr />
-        <label for="inputEmail3" class="col-sm-2 control-label">{{form.username.resoruceValue}}</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" name="userName" ng-model="loginData.userName" required placeholder="User Name" autofocus ng-init="loginData.userName='jim rl tjx'"/>
-            <div ng-show="loginForm.userName.$invalid && loginForm.userName.$touched">
-                <br />
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    User name is required!
+            <form class="form-horizontal" name="loginForm" novalidate ng-submit="login()">
+                <div class="form-group">
+                    <hr />
+                    <label for="inputEmail3" class="col-sm-2 control-label">{{form.username.resoruceValue}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="userName" ng-model="loginData.userName" required placeholder="User Name" autofocus ng-init="loginData.userName='jim rl tjx'"/>
+                        <div ng-show="loginForm.userName.$invalid && loginForm.userName.$touched">
+                            <br />
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                User name is required!
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">{{form.password.resoruceValue}}</label>
+                    <div class="col-sm-10">
+                        <input type="password" name="password" class="form-control" ng-model="loginData.password" required placeholder="Password" ng-init="loginData.password='welcome@1'">
+                        <div ng-show="loginForm.password.$invalid && loginForm.password.$touched">
+                            <br />
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                Password is required!
+                            </div>
+                        </div>
+
+                        <p>
+                            <a class="text-right" ng-click="showPasswordHint()"> {{form.passwordHint.resoruceValue}}</a>
+                        </p>
+                        <div ng-show="passwordHint">
+                            <br/>
+                            <div class="alert alert-success" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-ok" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                Password hint is : <b>{{passwordHint}}</b>
+                            </div>
+                        </div>
+                         <kendo-mobile-button k-rel="'modalview'"  k-on-click="forgotPasswordModalOpen()" style="width: 100%;" k-float="'center'"  id="modalview-open-button">{{form.forgotPassword.resoruceValue}}</kendo-mobile-button>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" data-ng-model="loginData.useRefreshTokens">
+                                {{form.remmberMe.resoruceValue}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <kendo-mobile-button type="submit" style="width: 100%;" k-float="'center'"  ng-disabled="loginForm.$invalid || loginForm.$pending">{{form.signin.resoruceValue}}</kendo-mobile-button>
+                        <div ng-show="message">
+                            <br />
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                {{message}}
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </form>
+
         </div>
+       
+        <kendo-mobile-modal-view id="modalview-forgotpassword" style="width: 90%; height:25%">
+            <kendo-mobile-header>
+                <kendo-mobile-nav-bar>
+                    <span>Login</span>
+                    <kendo-mobile-button k-on-click="closeModalViewForgotPassword()" k-align="'right'">Cancel</kendo-mobile-button>
+                </kendo-mobile-nav-bar>
+            </kendo-mobile-header>
+
+            <kendo-mobile-list-view k-style="'inset'">
+                
+                <li><h5>
+                    <label for="email">
+                        Email Address:
+                        <input type="email" id="email" ng-model="loginData.email" />
+                    </label></h5>
+                </li>
+            </kendo-mobile-list-view>
+
+            <kendo-mobile-button k-on-click="sendPassword()" id="modalview-login-button"
+                ng-disabled="!loginData.email"
+                style="width: 100%;" k-float="'center'" >Send Password</kendo-mobile-button>
+        </kendo-mobile-modal-view>
 
     </div>
-    <div class="form-group">
-        <label for="password" class="col-sm-2 control-label">{{form.password.resoruceValue}}</label>
-        <div class="col-sm-10">
-            <input type="password" name="password" class="form-control" ng-model="loginData.password" required placeholder="Password" ng-init="loginData.password='welcome@1'">
-            <div ng-show="loginForm.password.$invalid && loginForm.password.$touched">
-                <br />
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    Password is required!
-                </div>
-            </div>
 
-            <p><a class="text-right" ng-click="showPasswordHint()"> {{form.passwordHint.resoruceValue}}</a></p>
-            <div ng-show="passwordHint">
-                <br/>
-                <div class="alert alert-success" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-ok" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    Password hint is : <b>{{passwordHint}}</b>
-                </div>
-            </div>
-             <a href ng-click="forgotPasswordModalToggle()" >{{form.forgotPassword.resoruceValue}}</a>
-    
-        </div>
+</kendo-mobile-view>
 
-    </div>
-
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-ng-model="loginData.useRefreshTokens">
-                   {{form.remmberMe.resoruceValue}}
-                </label>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid || loginForm.$pending">{{form.signin.resoruceValue}}</button>
-            <div ng-show="message">
-                <br />
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    {{message}}
-                </div>
-            </div>
-        </div>
-
-    </div>
-</form>
- 
-    <modal title="Forgot Password" visible="showModal">
-        <input type="text"/>
-    <form role="form" name="frmForgotPassword" novalidate ng-submit="sendPassword()">
-   
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" placeholder="Enter emailaddress" name="email" id="email" ng-model="forgotpassword.email"/>
-            <div ng-show="frmForgotPassword.email.$invalid && frmForgotPassword.email.$touched">
-                <br/>
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-ok" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    Valid email address is required!
-                </div>
-            </div>
-        </div>
-        <button type="submit" ng-disabled="frmForgotPassword.$invalid || frmForgotPassword.$pending" class="btn btn-primary">Get New Password</button>
-        <div ng-show="forgotpassword.message && !(frmForgotPassword.email.$invalid && frmForgotPassword.email.$touched)">
-            <br/>
-            <div class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error:</span>
-                {{forgotpassword.message}}
-            </div>
-        </div>
-    </form>
-</modal>
-    
-    </div>
- </div></kendo-mobile-view>
-
-
-  
-  

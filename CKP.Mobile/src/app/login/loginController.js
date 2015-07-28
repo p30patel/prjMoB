@@ -38,16 +38,36 @@ app.controller('loginController', [
                        $scope.passwordHint = "";
 
                        //forgot password 
-                       $scope.forgotpassword = {};
-
-                       //modal
-                       $scope.showModal = false;
-                       $scope.forgotPasswordModalToggle = function () {
-                           $scope.showModal = !$scope.showModal;
-
-                           $scope.forgotpassword.message = "";
-                           $scope.forgotpassword.email = "";
+                       
+                       $scope.forgotPasswordModalOpen = function () {
+                           $("#modalview-forgotpassword").kendoMobileModalView("open"); 
                        };
+                       $scope.closeModalViewForgotPassword = function() {
+                           $("#modalview-forgotpassword").kendoMobileModalView("close"); 
+                       };
+                       
+                       $scope.sendPassword = function () {
+                           kendo.mobile.application.pane.loader.show();
+                           var username = 'rjmarshallca'; //for test - else use  $scope.loginData.userName;
+                           var email = $scope.loginData.email;
+                           loginDataService.resetPassword(username, email).then(function(result) {
+                           
+                                  alerting.addSuccess(result);
+                              
+                               
+                            
+                           },
+                                                                                function (err) {
+                                                                                   
+                                                                                   
+                                                                                    alerting.addSuccess(err.error_description);
+                                                                                    
+                                                                                }).finally(function () {
+                                                                                    kendo.mobile.application.pane.loader.hide();
+                                                                                    $("#modalview-forgotpassword").kendoMobileModalView("close"); 
+                                                                                });
+                       };
+                       //end forgot password
 
                        var languages = function () {
                            $scope.languages = [{ Name: "English", Culture: "en-US", Id: 1, Error: "" }];
@@ -122,21 +142,6 @@ app.controller('loginController', [
                                alerting.addSuccess('Hint is : ' + result);
                                kendo.mobile.application.pane.loader.hide();
                            });
-                       };
- 
-                       $scope.sendPassword = function () {
-                           kendo.mobile.application.pane.loader.show();
-                           var username = 'rjmarshallca'; //for test - else use  $scope.loginData.userName;
-                           var email = $scope.forgotpassword.email;
-                           loginDataService.resetPassword(username, email).then(function(result) {
-                               $scope.forgotpassword.message = result;
-                               alerting.addSuccess(result);
-                           },
-                                                                                function (err) {
-                                                                                    $scope.forgotpassword.message = err.error_description;
-                                                                                }).finally(function () {
-                                                                                    kendo.mobile.application.pane.loader.hide();
-                                                                                });
                        };
                    }
                ]);

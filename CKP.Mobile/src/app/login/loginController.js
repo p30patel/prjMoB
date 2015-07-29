@@ -36,13 +36,19 @@ app.controller('loginController', [
 
                        $scope.languages = {};
                        $scope.passwordHint = "";
-
+                       $scope.checkAuth = function(){  
+                           alert('e');
+                           //alert(e.kendMobileView.params.userId);
+                       }
+                       
                        //forgot password 
                        
                        $scope.forgotPasswordModalOpen = function () {
+                           $scope.loginData.email = "";
                            $("#modalview-forgotpassword").kendoMobileModalView("open"); 
                        };
                        $scope.closeModalViewForgotPassword = function() {
+                          
                            $("#modalview-forgotpassword").kendoMobileModalView("close"); 
                        };
                        
@@ -122,6 +128,7 @@ app.controller('loginController', [
 
                        //loign event
                        $scope.login = function () {
+                        
                            kendo.mobile.application.pane.loader.show();
                            $scope.passwordHint = "";
                            authService.login($scope.loginData).then(function (response) {

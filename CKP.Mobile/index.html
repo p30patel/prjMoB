@@ -52,7 +52,7 @@
         <script src="src/app/policies/policiesController.js"></script>
         <script src="src/app/termsCondition/termsConditionController.js"></script>
     </head>
-    <body kendo-mobile-application ng-app="app" k-layout="'main'" k-initial="'src/app/home/home.html'" k-hash-bang="true">
+    <body kendo-mobile-application ng-app="app" k-initial="'src/app/home/home.html'" k-hash-bang="true">
 
         <kendo-mobile-layout k-id="'main'" ng-controller="menuController">
             <kendo-mobile-header >
@@ -61,9 +61,10 @@
                         <span class="km-text"><i class="icon ion-navicon-round"></i> Menu</span>
                     </a>
                     <kendo-view-title></kendo-view-title>
-                    <a href="" class="k-icon k-i-note" k-align="'right'" ng-show="authentication.isAuth" ng-click="mnuClick('message')">&nbsp;</a>
-
+                    <a href="" class="k-icon k-i-note" k-align="'right'" ng-show="authentication.isAuth" ng-click="mnuClick('message')">&nbsp;</a>&nbsp;
+              
                     <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
+                  
                 </kendo-mobile-nav-bar>
 
             </kendo-mobile-header>
@@ -80,6 +81,7 @@
         </kendo-mobile-layout>
 
         <!-- application drawer and contents -->
+        
         <kendo-mobile-drawer id="right-drawer" style="width: 270px" k-title="'{{menu.title}}'" ng-controller="menuController">
             <kendo-mobile-header>
                 <kendo-mobile-nav-bar>
@@ -101,6 +103,7 @@
 
             <ul kendo-mobile-list-view>
                 <li>
+                  
                     <a href="src/app/contactus/contactus.html" data-icon="info">
                         {{menu.contactus}}
                     </a>
@@ -121,7 +124,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="apps/help/help.html" data-icon="home">
+                    <a href="src/app/help/help.html" data-icon="home">
                         {{menu.help}}
                     </a>
                 </li>
@@ -138,6 +141,31 @@
 
             </ul>
         </kendo-mobile-drawer>
+
+        
+            <kendo-mobile-layout k-id="'other'" ng-controller="menuController">
+            <kendo-mobile-header >
+                <kendo-mobile-nav-bar>
+                   
+                    <kendo-view-title></kendo-view-title>
+                    <a href="" class="data-home" k-align="'right'" ng-show="authentication.isAuth" ng-click="mnuClick('close')"> close</a>&nbsp;
+               
+                    <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
+                  
+                </kendo-mobile-nav-bar>
+
+            </kendo-mobile-header>
+           
+
+            <!-- application views will be rendered here -->
+            <kendo-mobile-footer>
+                <kendo-mobile-nav-bar>
+                    <p>
+                        <alerts></alerts>
+                    </p>
+                </kendo-mobile-nav-bar>
+            </kendo-mobile-footer>
+        </kendo-mobile-layout>
 
         <script>document.addEventListener('deviceready', function () {
             feedback.initialize('7c882340-3274-11e5-a28d-c9df925f448c'); // Replace with your API key

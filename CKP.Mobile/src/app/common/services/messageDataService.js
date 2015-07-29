@@ -17,7 +17,7 @@ function ($http, $q, localStorageService, ngAuthSettings, authService, $location
 
         // $http.get(authServiceBase + 'webapi/api/core/MobileApp/GetMessagesTaskAsync?retailerId=' + 6884, { headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': authData.tokenType + authData.token } }).success(function (result) {
 
-        $http.get(authServiceBase + 'webapi/api/core/MobileApp/GetHolidaysTaskAsync?retailerId=' + 6884).success(function (result) {
+        $http.get(authServiceBase + 'webapi/api/core/MobileApp/GetMessagesTaskAsync?retailerId=' + 6884).success(function (result) {
             deferred.resolve(result);
         })
                         .error(function (err, status) {

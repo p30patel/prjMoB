@@ -1,5 +1,5 @@
-<kendo-mobile-view k-title="'{{title}}'" ng-controller="messageController" >
-     <a href="" class="k-icon k-i-close" k-align="'right'" ng-click="messageClose()">&nbsp;</a>
+<kendo-mobile-view k-title="'{{title}}'"  k-layout="'other'"  ng-controller="messageController" >
+   
     <div class='container'><br>
                 <div ng-show="mesages" ng-repeat="message in mesages">
                     <h5>{{message.Name}}</h5>

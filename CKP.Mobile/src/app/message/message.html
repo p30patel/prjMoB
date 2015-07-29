@@ -1,11 +1,24 @@
 <kendo-mobile-view k-title="'{{title}}'"  k-layout="'other'"  ng-controller="messageController" >
-   
-    <div class='container'><br>
-                <div ng-show="mesages" ng-repeat="message in mesages">
-                    <h5>{{message.Name}}</h5>
-                    <p>({{message.HolidayDescription}}) closed on {{ message.StartDate | date}} - {{message.EndDate | date}} </p>
-                    <hr/>
-                </div>
-                <div ng-show="!mesages">No Messages are found!</div>
+
+    <div class='container'>
+        <br>
+        <div ng-show="mesages" ng-repeat="message in mesages.PartnerHolidayList">
+            <h5>{{message.Name}}</h5>
+            <p>({{message.HolidayDescription}}) closed on {{ message.StartDate | date}} - {{message.EndDate | date}} </p>
+            <hr/>
         </div>
+        <div ng-show="mesages" ng-repeat="message in mesages.AnnouncementList">
+         
+          
+            <div ng-show="message.SpecificRetailerId == 0">Checkpoint Systems, Inc.</div>
+            <div ng-show="message.SpecificRetailerId > 0">
+                <h5>{{message.RetailerName}} # {{message.SpecificRetailerId}}</h5>
+                <h6>{{message.Title}}</h6>
+            </div>
+            <div class='container'  ng-bind-html="renderHtml(message.Message)"></div>         
+            <hr/>
+        </div>
+        <div ng-show="!mesages">No Messages are found!</div>
+    </div>
+   
 </kendo-mobile-view>

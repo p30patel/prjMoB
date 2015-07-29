@@ -1,9 +1,19 @@
 <kendo-mobile-view k-title="'FAQ'"  k-layout="'main'" ng-controller="faqController">
-    
-  <h4>FAQ's</h4>
+    <div ng-show="faqs" ng-repeat="faq in faqs.FaqLists | orderBy : 'DisplayOrder'">
 
-  
-<div class='container'  ng-bind-html="renderHtml(body)"></div>
-    
+        <ul kendo-panel-bar k-options="panelBarOptions">
+            <li>
+                <span ng-bind-html="renderHtml(faq.Question)"></span>
+                <ul>
+                    <li>
+                        <span ng-bind-html="renderHtml(faq.Answer)"></span>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+     <div ng-show="!faqs">
+         No data found
+     </div>
 </kendo-mobile-view>
-

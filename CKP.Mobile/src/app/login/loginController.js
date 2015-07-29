@@ -36,7 +36,7 @@ app.controller('loginController', [
 
                        $scope.languages = {};
                        $scope.passwordHint = "";
-                       $scope.checkAuth = function(){  
+                       $scope.checkAuth = function() {  
                            alert('e');
                            //alert(e.kendMobileView.params.userId);
                        }
@@ -48,7 +48,6 @@ app.controller('loginController', [
                            $("#modalview-forgotpassword").kendoMobileModalView("open"); 
                        };
                        $scope.closeModalViewForgotPassword = function() {
-                          
                            $("#modalview-forgotpassword").kendoMobileModalView("close"); 
                        };
                        
@@ -57,17 +56,11 @@ app.controller('loginController', [
                            var username = 'rjmarshallca'; //for test - else use  $scope.loginData.userName;
                            var email = $scope.loginData.email;
                            loginDataService.resetPassword(username, email).then(function(result) {
-                           
-                                  alerting.addSuccess(result);
-                              
+                               alerting.addSuccess(result);
                                
-                            
                            },
                                                                                 function (err) {
-                                                                                   
-                                                                                   
                                                                                     alerting.addSuccess(err.error_description);
-                                                                                    
                                                                                 }).finally(function () {
                                                                                     kendo.mobile.application.pane.loader.hide();
                                                                                     $("#modalview-forgotpassword").kendoMobileModalView("close"); 
@@ -128,7 +121,6 @@ app.controller('loginController', [
 
                        //loign event
                        $scope.login = function () {
-                        
                            kendo.mobile.application.pane.loader.show();
                            $scope.passwordHint = "";
                            authService.login($scope.loginData).then(function (response) {

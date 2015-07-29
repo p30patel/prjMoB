@@ -1,0 +1,19 @@
+<kendo-mobile-view k-title="'Policy'" k-layout="'main'" ng-controller="policyController">
+   <div ng-show="policies" ng-repeat="policy in policies">
+
+        <ul kendo-panel-bar k-options="panelBarOptions">
+            <li class="k-state-active">
+                <span ng-bind-html="renderHtml(policy.ResourceName)"></span>
+                <ul>
+                    <li>
+                        <span ng-bind-html="renderHtml(policy.ResourceValue)"></span>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+     <div ng-show="!policies">
+         No data found
+     </div>
+</kendo-mobile-view>

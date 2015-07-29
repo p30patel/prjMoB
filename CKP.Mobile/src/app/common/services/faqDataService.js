@@ -1,20 +1,20 @@
 
 'use strict';
 
-app.factory("messageDataService", [
+app.factory("faqDataService", [
                 "$http", "$q", "localStorageService", "ngAuthSettings", "authService", "$location",
                 function ($http, $q, localStorageService, ngAuthSettings, authService, $location) {
-                    var messageDataServiceFactory = {};
+                    var faqDataServiceFactory = {};
 
-                    var forceGetMessages = function () {
+                    var forceGetFaqs = function () {
                         var deferred = $q.defer();
                         var authServiceBase = ngAuthSettings.authServiceBaseUri;
-
                         var authData = authService.getUserInfo();
-                        var userId = authData.userId;
+                        var cultureName = "en-US";
 
-                        $http.get(authServiceBase + 'webapi/api/core/MobileApp/GetMessageListTaskAsync?userId=' + userId).success(function (result) {
-                              localStorageService.set('faqs', messages);
+                        $http.get(authServiceBase + 'webapi/api/core/MobileApp/GetFaq?cultureName=' + cultureName).success(function (result) {
+                          
+                            localStorageService.set('faqs', result);
                             deferred.resolve(result);
                         })
                             .error(function (err, status) {
@@ -22,14 +22,15 @@ app.factory("messageDataService", [
                             });
                         return deferred.promise;
                     };
-                    var getMessages = function () {
+                    var getFaqs = function () {
                         var deferred = $q.defer();
+
+                        var faqs = localStorageService.get("faqs");
                         
-                        var messages = localStorageService.get("messages");
-                        if (messages) {
-                            deferred.resolve(messages);
+                        if (faqs) {
+                            deferred.resolve(faqs);
                         } else {
-                            forceGetMessages().then(function (result) {
+                            forceGetFaqs().then(function (result) {
                                 deferred.resolve(result);
                             });
                         }
@@ -37,9 +38,9 @@ app.factory("messageDataService", [
                         return deferred.promise;
                     }
 
-                    messageDataServiceFactory.getMessages = getMessages;
-                    messageDataServiceFactory.forceGetMessages = forceGetMessages;
+                    faqDataServiceFactory.getFaqs = getFaqs;
+                    faqDataServiceFactory.forceGetFaqs = forceGetFaqs;
 
-                    return messageDataServiceFactory;
+                    return faqDataServiceFactory;
                 }
             ]);

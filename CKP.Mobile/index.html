@@ -10,7 +10,7 @@
         <link href="src/assests/styles/main.css" rel="stylesheet" />
         <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.default.min.css">
         <script src="cordova.js"></script>
- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <!--<script src="kendo/js/jquery.min.js"></script>-->
 
         <script src="src/vendor/angular.js"></script>
@@ -34,22 +34,26 @@
         <script src="src/app/common/services/loginDataService.js"></script>
         <script src="src/app/common/services/translateService.js"></script>
         <script src="src/app/common/services/alerting.js"></script>
+        <script src="src/app/common/services/faqDataService.js"></script>
+        <script src="src/app/common/services/policyDataService.js"></script>
+        <script src="src/app/common/services/termsConditionDataService.js"></script>
+
         <script src="src/app/common/directives/alerting.js"></script>
         <script src="src/app/common/directives/components.js"></script>
 
         <!-- app scripts -->
 
         <script src="src/app/menu/menuController.js"></script>
-        <script src="src/app/login/loginController.js"></script>     
+        <script src="src/app/login/loginController.js"></script>
         <script src="src/app/home/homeController.js"></script>
         <script src="src/app/contactus/contactusController.js"></script>
         <script src="src/app/faq/faqController.js"></script>
-         <script src="src/app/message/messageController.js"></script>
+        <script src="src/app/message/messageController.js"></script>
 
         <script src="src/app/feedback/feedbackController.js"></script>
         <script src="src/app/help/helpController.js"></script>
         <script src="src/app/notification/notificationController.js"></script>
-        <script src="src/app/policies/policiesController.js"></script>
+        <script src="src/app/policy/policyController.js"></script>
         <script src="src/app/termsCondition/termsConditionController.js"></script>
     </head>
     <body kendo-mobile-application ng-app="app" k-initial="'src/app/home/home.html'" k-hash-bang="true">
@@ -62,13 +66,12 @@
                     </a>
                     <kendo-view-title></kendo-view-title>
                     <a href="" class="k-icon k-i-note" k-align="'right'" ng-show="authentication.isAuth" ng-click="mnuClick('message')">&nbsp;</a>&nbsp;
-              
+
                     <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
-                  
+
                 </kendo-mobile-nav-bar>
 
             </kendo-mobile-header>
-           
 
             <!-- application views will be rendered here -->
             <kendo-mobile-footer>
@@ -81,7 +84,7 @@
         </kendo-mobile-layout>
 
         <!-- application drawer and contents -->
-        
+
         <kendo-mobile-drawer id="right-drawer" style="width: 270px" k-title="'{{menu.title}}'" ng-controller="menuController">
             <kendo-mobile-header>
                 <kendo-mobile-nav-bar>
@@ -103,7 +106,7 @@
 
             <ul kendo-mobile-list-view>
                 <li>
-                  
+
                     <a href="src/app/contactus/contactus.html" data-icon="info">
                         {{menu.contactus}}
                     </a>
@@ -119,7 +122,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="src/app/policies/policies.html" data-icon="home">
+                    <a href="src/app/policy/policy.html" data-icon="home">
                         {{menu.policies}}
                     </a>
                 </li>
@@ -142,20 +145,18 @@
             </ul>
         </kendo-mobile-drawer>
 
-        
-            <kendo-mobile-layout k-id="'other'" ng-controller="menuController">
+        <kendo-mobile-layout k-id="'other'" ng-controller="menuController">
             <kendo-mobile-header >
                 <kendo-mobile-nav-bar>
-                   
+
                     <kendo-view-title></kendo-view-title>
                     <a href="" class="data-home" k-align="'right'" ng-show="authentication.isAuth" ng-click="mnuClick('close')"> close</a>&nbsp;
-               
+
                     <!--  <kendo-mobile-back-button id="back-button" k-align="'right'"></kendo-mobile-back-button>-->
-                  
+
                 </kendo-mobile-nav-bar>
 
             </kendo-mobile-header>
-           
 
             <!-- application views will be rendered here -->
             <kendo-mobile-footer>

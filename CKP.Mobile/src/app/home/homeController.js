@@ -69,11 +69,11 @@ app.controller('homeController', [
                                           xhr.setRequestHeader('Access-Control-Allow-Origin', "*"); // added to remove the error No 'Access-Control-Allow-Origin' 
                                       },
                                       success: function (data) {
-                                        //  alert(data.length);
+                                        
                                           $scope.recentOrders = data;
                                       },
                                       error: function (jq, status, message) {
-                                        //  alert(message);
+                                      
                                       }
                                   });
                        };

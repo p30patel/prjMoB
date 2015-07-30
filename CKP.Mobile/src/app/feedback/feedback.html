@@ -1,6 +1,6 @@
 <kendo-mobile-view k-title="'Feedback'" k-layout="'main'" ng-controller="feedbackController">
    <div style="margin:10px;">
-    <textarea rows="4" cols="45" ng-model="feedbackData.comment"></textarea><br>
+    <textarea rows="4" style="width: 90%;" ng-model="feedbackData.comment"></textarea><br>
        <hr>
 
         <kendo-button ng-click="send()" style="width: 90%;" k-float="'center'"  ng-disabled="!feedbackData.comment">Send Feedback</kendo-button>

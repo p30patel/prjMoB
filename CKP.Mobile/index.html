@@ -37,6 +37,7 @@
         <script src="src/app/common/services/faqDataService.js"></script>
         <script src="src/app/common/services/policyDataService.js"></script>
         <script src="src/app/common/services/termsConditionDataService.js"></script>
+         <script src="src/app/common/services/feedbackDataService.js"></script>
 
         <script src="src/app/common/directives/alerting.js"></script>
         <script src="src/app/common/directives/components.js"></script>
@@ -131,12 +132,12 @@
                         {{menu.help}}
                     </a>
                 </li>
-                <li>
+                <li ng-show="authentication.isAuth">
                     <a href="src/app/notification/notification.html" data-icon="settings">
                         {{menu.notificationSettings}}
                     </a>
                 </li>
-                <li>
+                <li ng-show="authentication.isAuth">
                     <a href="src/app/feedback/feedback.html" data-icon="home">
                         {{menu.feedback}}
                     </a>
@@ -161,9 +162,9 @@
             <!-- application views will be rendered here -->
             <kendo-mobile-footer>
                 <kendo-mobile-nav-bar>
-                    <p>
+               
                         <alerts></alerts>
-                    </p>
+                 
                 </kendo-mobile-nav-bar>
             </kendo-mobile-footer>
         </kendo-mobile-layout>

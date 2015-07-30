@@ -25,7 +25,7 @@ app.factory("policyDataService", [
                         var deferred = $q.defer();
 
                         var policies = localStorageService.get("policies");
-                        policies = '';
+                      
                         if (policies) {
                             deferred.resolve(policies);
                         } else {

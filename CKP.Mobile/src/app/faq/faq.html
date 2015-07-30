@@ -1,4 +1,5 @@
 <kendo-mobile-view k-title="'FAQ'"  k-layout="'main'" ng-controller="faqController">
+  
     <div ng-show="faqs" ng-repeat="faq in faqs.FaqLists | orderBy : 'DisplayOrder'">
 
         <ul kendo-panel-bar k-options="panelBarOptions">
@@ -7,6 +8,8 @@
                 <ul>
                     <li>
                         <span ng-bind-html="renderHtml(faq.Answer)"></span>
+                        <br>
+                        <br>
                     </li>
 
                 </ul>

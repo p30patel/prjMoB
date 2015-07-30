@@ -19,11 +19,6 @@ app.controller('faqController', [
                        $scope.renderHtml = function (content) {
                            return $sce.trustAsHtml(content);
                        };
-                       
-                       $scope.panelBarOptions = function () {
-                         
-                           expandMode:
-                           "single"
-                       };
+                   
                    }
                ]);

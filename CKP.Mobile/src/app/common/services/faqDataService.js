@@ -26,7 +26,7 @@ app.factory("faqDataService", [
                         var deferred = $q.defer();
 
                         var faqs = localStorageService.get("faqs");
-                        
+                       faqs='';
                         if (faqs) {
                             deferred.resolve(faqs);
                         } else {

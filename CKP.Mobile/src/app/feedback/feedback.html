@@ -1,5 +1,6 @@
-<kendo-mobile-view k-title="'Feedback'" k-layout="'main'" >
-    
- Feedback
+<kendo-mobile-view k-title="'Feedback'" k-layout="'main'" ng-controller="feedbackController">
+    <button class="k-button" ng-click="showInContainer()">Show in container</button><br />
 
+    <input type="text" ng-model="feedbackData.comment"/>
+    <button  ng-click="send()">Send</button>
 </kendo-mobile-view>

@@ -5,6 +5,7 @@ app.factory("messageDataService", [
                 "$http", "$q", "localStorageService", "ngAuthSettings", "authService", "$location",
                 function ($http, $q, localStorageService, ngAuthSettings, authService, $location) {
                     var messageDataServiceFactory = {};
+                     var date = kendo.toString(new Date(), "yyyy-MM-dd");
 
                     var forceGetMessages = function () {
                         var deferred = $q.defer();
@@ -12,9 +13,10 @@ app.factory("messageDataService", [
 
                         var authData = authService.getUserInfo();
                         var userId = authData.userId;
-
+                      
+                      
                         $http.get(authServiceBase + 'webapi/api/core/MobileApp/GetMessageListTaskAsync?userId=' + userId).success(function (result) {
-                              localStorageService.set('faqs', result);
+                              localStorageService.set('messages' + date, result);
                             deferred.resolve(result);
                         })
                             .error(function (err, status) {
@@ -25,7 +27,7 @@ app.factory("messageDataService", [
                     var getMessages = function () {
                         var deferred = $q.defer();
                         
-                        var messages = localStorageService.get("messages");
+                        var messages = localStorageService.get("messages" + date);
                         if (messages) {
                             deferred.resolve(messages);
                         } else {

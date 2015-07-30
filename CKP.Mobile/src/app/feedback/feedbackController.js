@@ -22,6 +22,7 @@ app.controller('feedbackController', [
                            feedbackDataService.postFeedback($scope.feedbackData).then(function (result) {
                                if (result === 'success') {
                                    alerting.addSuccess("Thank you for your feedback!");
+                                   $scope.feedbackData.comment = "";
                                } else {
                                    alerting.addSuccess("Faild to post feedback!");
                                }

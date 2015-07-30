@@ -1,6 +1,9 @@
 <kendo-mobile-view k-title="'Feedback'" k-layout="'main'" ng-controller="feedbackController">
-    <button class="k-button" ng-click="showInContainer()">Show in container</button><br />
+   <div style="margin:10px;">
+    <textarea rows="4" cols="45" ng-model="feedbackData.comment"></textarea><br>
+       <hr>
 
-    <input type="text" ng-model="feedbackData.comment"/>
-    <button  ng-click="send()">Send</button>
+        <kendo-button ng-click="send()" style="width: 90%;" k-float="'center'"  ng-disabled="!feedbackData.comment">Send Feedback</kendo-button>
+      
+    </div>
 </kendo-mobile-view>

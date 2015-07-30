@@ -6,13 +6,14 @@ app.factory("homeDataService", [
                 function ($http, $q, localStorageService, ngAuthSettings) {
                     var authServiceBase = ngAuthSettings.authServiceBaseUri;
                     var homeDataServiceFactory = {};
-
+                    var date = kendo.toString(new Date(), "yyyy-MM-dd HH");
+                   
                     var forceGetOrderCounts = function () {
                         var deferred = $q.defer();
                         var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderCountsTaskAsync?userId=" + 1;
                         $http.get(url).success(function (result) {
-                           
-                            localStorageService.set('orderCount', result);
+                          
+                            localStorageService.set('orderCount' +  date, result);
                             deferred.resolve(result);
                         }).error(function (err, status) {
                             deferred.reject(err);
@@ -24,11 +25,13 @@ app.factory("homeDataService", [
                     var getOrderCounts = function () {
                         var deferred = $q.defer();
           
-                        var orderCountData = localStorageService.get('orderCount');
-          
+                        var orderCountData = localStorageService.get('orderCount' + date);
+                        
                         if (orderCountData) {
+                            
                             deferred.resolve(orderCountData);
                         } else {
+                            
                             forceGetOrderCounts().then(function (result) {
                                 deferred.resolve(result);
                             });
@@ -42,7 +45,8 @@ app.factory("homeDataService", [
             
                         var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderHeaderDataTaskAsync?userId=" + 1 + "&client_id=" + ngAuthSettings.clientId;
                         $http.get(url).success(function (result) {
-                            localStorageService.set('orderHeaderData', result);
+                          
+                            localStorageService.set('orderHeaderData' + date, result);
                             deferred.resolve(result);
                         }).error(function (err, status) {
                             deferred.reject(err);
@@ -54,7 +58,7 @@ app.factory("homeDataService", [
                     var getOrderHeaderData = function () {
                         var deferred = $q.defer();
 
-                        var orderHeaderData = localStorageService.get('orderHeaderData');
+                        var orderHeaderData = localStorageService.get('orderHeaderData' + date);
 
                         if (orderHeaderData) {
                             deferred.resolve(orderHeaderData);

@@ -3,13 +3,11 @@ app.controller('homeController', [
                    '$scope', '$http', '$location', 'authService', 'localStorageService', '$timeout', 'homeDataService', 'alerting', '$filter',
                    function($scope, $http, $location, authService, localStorageService, $timeout, homeDataService, alerting, $filter) {
                        var init = function() {
-                             
                            if (!authService.authentication.isAuth) {
                                authService.logout();
-                                  alerting.addSuccess("Please Login!");
+                               alerting.addSuccess("Please Login!");
                                kendo.mobile.application.navigate("src/app/login/login.html");
                            }
-                             
                        };
                        init();
                        $scope.title = 'Home';
@@ -51,44 +49,9 @@ app.controller('homeController', [
 
                        homeDataService.getOrderHeaderData().then(function (result) {
                            $scope.orders = result;
-                               alerting.addSuccess("Completed Order Data Header Request!");
+                           alerting.addSuccess("Completed Order Data Header Request!");
                        });
-
-                       var getRecentOrderData = function () {
-                           var authServerUri = "https://qachecknet.checkpt.com/webapi/api/core/MobileApp/GetRecentOrdersTaskAsync";
-                           //var authServerUri = "http://localhost:62356/api/core/MobileApp/GetRecentOrdersTaskAsync";
-                           var data = "retailerId=" + 6884 + "&orgId=" + 6884 + "&groupType=" + 'Retailer' + "&startRowIndex=" + 1 + "&maximumRows=" + 10;
-                        
-                           $.ajax({
-                                      type: "Get",
-                                      url: authServerUri,
-                                      data: data,
-                                      headers: { 'Content-Type': 'application/x-www-form-urlencoded;' },
-                                      beforeSend: function (xhr) {
-                                          xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-                                          xhr.setRequestHeader('Access-Control-Allow-Origin', "*"); // added to remove the error No 'Access-Control-Allow-Origin' 
-                                      },
-                                      success: function (data) {
-                                        
-                                          $scope.recentOrders = data;
-                                      },
-                                      error: function (jq, status, message) {
-                                      
-                                      }
-                                  });
-                       };
-
-                       var getRecentOrders = function () {
-                           var authData = localStorageService.get('authorizationData');
-
-                           if (authData) {
-                               accessToken = authData.token;
-                               getRecentOrderData();
-                           } else {
-                               Location.path('/login');
-                           }
-                       };
-
+                      
                        $scope.approvalDetail = function (id) {
                            $('.order').hide();
 
@@ -98,18 +61,20 @@ app.controller('homeController', [
                        };
 
                        var getOrderCounts = function () {
-                             alerting.addSuccess("Getting Order Counts!");
-                            kendo.mobile.application.pane.loader.show();
+                           alerting.addSuccess("Getting Order Counts!");
+                           kendo.mobile.application.pane.loader.show();
                            homeDataService.getOrderCounts().then(function (result) {
                                $scope.orderCounts = result;
                                alerting.addSuccess("Completed Order Counts Request!");
-                                kendo.mobile.application.pane.loader.hide();
+                             
                                angular.element($scope.activeTabId).trigger('click');
                                if ($scope.activeTabId !== "") {
                                    angular.element($scope.activeTabId).trigger('click');
                                }
                            }
-                               );
+                               ).finally(function() {
+                                   kendo.mobile.application.pane.loader.hide();
+                               });
                        }
                        getOrderCounts();
 
@@ -148,7 +113,7 @@ app.controller('homeController', [
                            }
                        }
 
-                    //pull to refresh
+                       //pull to refresh
                        $scope.refresh = function() {
                            var currentDate = $filter('date')(new Date(), 'dd-MMM-yy HH:mm:ss');
                            alerting.addSuccess("Last updated " + currentDate);

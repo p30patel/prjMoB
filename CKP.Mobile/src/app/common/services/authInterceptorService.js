@@ -31,13 +31,15 @@ app.factory('authInterceptorService', ['$q', '$location','$injector',
 
             if (authData) {
                 if (authData.useRefreshTokens) {
-                    $location.path('/refresh');
+                 //   $location.path('/refresh');
+                         kendo.mobile.application.navigate("src/app/login/login.html");
                     return $q.reject(rejection);
                 }
             }
             authService.logout();
              
-            $location.path('/login');
+            //$location.path('/login');
+              kendo.mobile.application.navigate("src/app/login/login.html");
 
             alerting.addDanger("Un-Authorized Access, Please login to access!"  );
         }

@@ -1,10 +1,10 @@
 
 'use strict';
 
-app.factory("messageDataService", [
+app.factory("orderDataService", [
                 "$http", "$q", "localStorageService", "ngAuthSettings", "authService", "$location",
                 function ($http, $q, localStorageService, ngAuthSettings, authService, $location) {
-                    var messageDataServiceFactory = {};
+                    var orderDataServiceFactory = {};
                     var date = kendo.toString(new Date(), "yyyy-MM-dd");
                     
                     var forceGetMessages = function () {
@@ -38,9 +38,9 @@ app.factory("messageDataService", [
                         return deferred.promise;
                     }
 
-                    messageDataServiceFactory.getMessages = getMessages;
-                    messageDataServiceFactory.forceGetMessages = forceGetMessages;
+                    orderDataServiceFactory.getMessages = getMessages;
+                    orderDataServiceFactory.forceGetMessages = forceGetMessages;
 
-                    return messageDataServiceFactory;
+                    return orderDataServiceFactory;
                 }
             ]);

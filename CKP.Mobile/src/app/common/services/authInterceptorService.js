@@ -24,7 +24,7 @@ app.factory('authInterceptorService', ['$q', '$location','$injector',
 
     var responseError = function (rejection) {
        
-       
+    
         if (rejection.status === 401) {
             var authService = $injector.get('authService');
             var authData = localStorageService.get('authorizationData');
@@ -45,6 +45,11 @@ app.factory('authInterceptorService', ['$q', '$location','$injector',
         }
         else if (rejection.status === 404) {
             alerting.addDanger("There is an error while proccessing this request. Error Code :" + 401  );
+        }
+        else if (rejection.status === 0) {
+              kendo.mobile.application.navigate("src/app/login/login.html");
+              alerting.addDanger("Server is unavailable. Please try later or contact customer service. Error Code :" + 0  );
+            
         }
         return $q.reject(rejection);
     }

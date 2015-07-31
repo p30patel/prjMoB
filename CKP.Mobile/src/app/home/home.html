@@ -1,140 +1,160 @@
 <kendo-mobile-view k-title="'{{title}}'"  k-layout="'main'" ng-controller="homeController">
-     <div kendo-mobile-scroller="scroller" k-pull-to-refresh="true" k-pull="refresh" style="height: 900px">
-<div class="container">
-  <br>
+    <div kendo-mobile-scroller="scroller" k-pull-to-refresh="true" k-pull="refresh" style="height: 900px">
+        <div class="container">
+            <br>
 
-<div class="search">
-    {{Search.SalesOrder}}
+            <div class="search">
+                {{Search.SalesOrder}}
 
-        <div class="text-right">
-            <ul class="nav navbar-nav">
-               
-            </ul>
-        </div>
-        <div class="">
-
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectedPara}} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="setSearhParamter('1')">Purchase Order</a></li>
-                        <li><a ng-click="setSearhParamter('2')">Sales Order</a></li>
-                        <li><a ng-click="setSearhParamter('3')">ShoppingCart ID</a></li>
-                        <li><a ng-click="setSearhParamter('4')">Vendor Ref</a></li>
+                <div class="text-right">
+                    <ul class="nav navbar-nav">
 
                     </ul>
-                </li>
-               <span class="k-textbox k-space-right" style="width: 90%;" >                   
-                    <input type="text" id="icon-right"  ng-model="searchValue" ng-keypress="key($event)"/>
-                    <a href="#" class="k-icon k-i-search" ng-show="!searchValue">&nbsp;</a>
-                    <a href="#" class="k-icon k-i-cancel"  ng-show="searchValue" ng-click="clearSearch()" k-align="'right'" >&nbsp;</a>
-                  
-                </span>
-           
+                </div>
+                <div class="">
 
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{selectedPara}} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a ng-click="setSearhParameter('1')">Purchase Order</a>
+                            </li>
+                            <li>
+                                <a ng-click="setSearhParameter('2')">Sales Order</a>
+                            </li>
+                            <li>
+                                <a ng-click="setSearhParameter('3')">ShoppingCart ID</a>
+                            </li>
+                            <li>
+                                <a ng-click="setSearhParameter('4')">Vendor Ref</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <span class="k-textbox k-space-right" style="width: 90%;" >
+                        <input type="text" id="icon-right"  ng-model="searchValue" ng-keypress="key($event)"/>
+                        <a href="#" class="k-icon k-i-search" ng-show="!searchValue">&nbsp;</a>
+                        <a href="#" class="k-icon k-i-cancel"  ng-show="searchValue" ng-click="clearSearch()" k-align="'right'" >&nbsp;</a>
+
+                    </span>
+
+                </div>
+
+            </div>
+            <div>
+                <div ng-repeat="orderCount in orderCounts">
+                    <ul kendo-mobile-button-group>
+                        <li  class="km-button retailer retailer-{{retailer.RetailerId}}" ng-show="orderCount.HasApproval">
+                            <a href id="approvalDetail-{{orderCount.RetailerId}}" ng-click="approvalDetail(orderCount.RetailerId)">Approval ({{ orderCount.ApprovalCount}})</a>
+                        </li>
+                        <li class="km-button retailer retailer-{{retailer.RetailerId}}"  ng-show="orderCount.NewOrderCount">
+                            <a href id="newOrderDetail-{{orderCount.RetailerId}}" ng-click="newOrderDetail(orderCount.RetailerId)" >New ({{ orderCount.NewOrderCount}})</a>
+                        </li>
+                        <li  class="km-button retailer retailer-{{retailer.RetailerId}}"  ng-show="orderCount.HasReleased">
+                            <a href id="releaseOrderDetail-{{orderCount.RetailerId}}" ng-click="releaseOrderDetail(orderCount.RetailerId)" >Released ({{ orderCount.ReleasedOrderCount}})</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+
+                    <br />
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane order" id="approval-{{orderCount.RetailerId}}">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+
+                                        <th ng-if="searchParameterId == '1'">Order Number</th>
+                                        <th ng-if="searchParameterId == '1' || searchParameterId == '2' ">Sales Order</th>
+                                        <th ng-if="searchParameterId == '2'">Order Number</th>
+                                        <th ng-if="searchParameterId == '3'">Shopping Cart</th>
+                                        <th ng-if="searchParameterId == '3'">Order Number</th>
+                                        <th ng-if="searchParameterId == '4'">Vendor Ref</th>
+                                        <th ng-if="searchParameterId == '4'">Order Number</th>
+                                        <th>Date In System</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="order in orders">
+                                        <td ng-if="searchParameterId == '1'">
+                                            <a href="" ng-click="orderDetail(1, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '1' || searchParameterId == '2' ">
+                                            <a href="" ng-click="orderDetail(1, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '2'">{{order.OrderNumber}}</td>
+                                        <td ng-if="searchParameterId == '3'">{{order.ShoppingCart}}</td>
+                                        <td ng-if="searchParameterId == '3'">{{order.OrderNumber}}</td>
+                                        <td ng-if="searchParameterId == '4'">{{order.VendorRef}}</td>
+                                        <td ng-if="searchParameterId == '4'">{{order.OrderNumber}}</td>
+                                        <td>{{order.DateInSystem | date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane order" id="new-{{orderCount.RetailerId}}">
+                            <table class="table table-condensed table-striped">
+                                <th ng-if="searchParameterId == '1'">Order Number</th>
+                                <th ng-if="searchParameterId == '2' ">Sales Order</th>
+                                <th ng-if="searchParameterId == '3'">Shopping Cart</th>
+                                <th ng-if="searchParameterId == '4'">Vendor Ref</th>
+                                <th>Status</th>
+                                <th>Order Date</th>
+                                <tbody>
+                                    <tr ng-repeat="order in orders">
+                                        <td ng-if="searchParameterId == '1'">
+                                            <a href="" ng-click="orderDetail(2, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '1' || searchParameterId == '2' ">
+                                            <a href="" ng-click="orderDetail(2, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '3'">{{order.ShoppingCart}}</td>
+                                        <td ng-if="searchParameterId == '4'">{{order.VendorRef}}</td>
+                                        <td>{{order.Status}}</td>
+                                        <td>{{order.OrderDate | date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane order" id="released-{{orderCount.RetailerId}}">
+
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+
+                                        <th ng-if="searchParameterId == '1'">Order Number</th>
+                                        <th ng-if="searchParameterId == '2' ">Sales Order</th>
+                                        <th ng-if="searchParameterId == '3'">Shopping Cart</th>
+                                        <th ng-if="searchParameterId == '4'">Vendor Ref</th>
+                                        <th>Status</th>
+                                        <th>Order Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="order in orders">
+                                        <td ng-if="searchParameterId == '1'">
+                                            <a href="" ng-click="orderDetail(3, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '1' || searchParameterId == '2' ">
+                                            <a href="" ng-click="orderDetail(3, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '3'">{{order.ShoppingCart}}</td>
+                                        <td ng-if="searchParameterId == '4'">{{order.VendorRef}}</td>
+                                        <td>{{order.Status}}</td>
+                                        <td>{{order.OrderDate | date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <br />
+                </div>
+
+            </div>
         </div>
-   
-</div>
-<div>
-    <div ng-repeat="orderCount in orderCounts">
-            <ul kendo-mobile-button-group>
-            <li  class="km-button retailer retailer-{{retailer.RetailerId}}" ng-show="orderCount.HasApproval">
-                <a href id="approvalDetail-{{orderCount.RetailerId}}" ng-click="approvalDetail(orderCount.RetailerId)">Approval ({{ orderCount.ApprovalCount}})</a>
-            </li>
-            <li class="km-button retailer retailer-{{retailer.RetailerId}}"  ng-show="orderCount.NewOrderCount">
-                <a href id="newOrderDetail-{{orderCount.RetailerId}}" ng-click="newOrderDetail(orderCount.RetailerId)" >New ({{ orderCount.NewOrderCount}})</a>
-            </li>
-            <li  class="km-button retailer retailer-{{retailer.RetailerId}}"  ng-show="orderCount.HasReleased">
-                <a href id="releaseOrderDetail-{{orderCount.RetailerId}}" ng-click="releaseOrderDetail(orderCount.RetailerId)" >Released ({{ orderCount.ReleasedOrderCount}})</a>
-            </li>
-        </ul>
-
-    
-        <!-- Tab panes -->
-       
-        <br />
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane order" id="approval-{{orderCount.RetailerId}}">
-                <table class="table table-condensed table-striped">
-                    <thead>
-                        <tr>
-
-                            <th ng-if="searchParamterId == '1'">Order Number</th>
-                            <th ng-if="searchParamterId == '1' || searchParamterId == '2' ">Sales Order</th>
-                            <th ng-if="searchParamterId == '2'">Order Number</th>
-                            <th ng-if="searchParamterId == '3'">Shopping Cart</th>
-                             <th ng-if="searchParamterId == '3'">Order Number</th>
-                            <th ng-if="searchParamterId == '4'">Vendor Ref</th>
-                             <th ng-if="searchParamterId == '4'">Order Number</th>
-                            <th>Date In System</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="order in orders">
-                             <td ng-if="searchParamterId == '1'"><a ng-href="#/apporvalDetail/{{order.OrderNumber}}">{{order.OrderNumber}}</a> </td>
-                            <td ng-if="searchParamterId == '1' || searchParamterId == '2' "> <a ng-href="#/orderList/{{selectedPara}}/{{order.SalesOrderNo}}">{{order.SalesOrderNo}}</a></td>
-                            <td ng-if="searchParamterId == '2'">{{order.OrderNumber}}</td>
-                            <td ng-if="searchParamterId == '3'">{{order.ShoppingCart}}</td>
-                             <td ng-if="searchParamterId == '3'">{{order.OrderNumber}}</td>
-                            <td ng-if="searchParamterId == '4'">{{order.VendorRef}}</td>
-                             <td ng-if="searchParamterId == '4'">{{order.OrderNumber}}</td>
-                            <td>{{order.DateInSystem | date}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div role="tabpanel" class="tab-pane order" id="new-{{orderCount.RetailerId}}">
-                <table class="table table-condensed table-striped">
-                    <th ng-if="searchParamterId == '1'">Order Number</th>
-                    <th ng-if="searchParamterId == '2' ">Sales Order</th>
-                    <th ng-if="searchParamterId == '3'">Shopping Cart</th>
-                    <th ng-if="searchParamterId == '4'">Vendor Ref</th>
-                    <th>Status</th>
-                        <th>Order Date</th>
-                    <tbody>
-                        <tr ng-repeat="order in orders">
-                           <td ng-if="searchParamterId == '1'"><a ng-href="#/apporvalDetail/{{order.OrderNumber}}">{{order.OrderNumber}}</a> </td>
-                            <td ng-if="searchParamterId == '2' ">{{order.SalesOrderNo}}</td>
-                            <td ng-if="searchParamterId == '3'">{{order.ShoppingCart}}</td>
-                            <td ng-if="searchParamterId == '4'">{{order.VendorRef}}</td>
-                            <td>{{order.Stauts}}</td>
-                            <td>{{order.OrderDate | date}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div role="tabpanel" class="tab-pane order" id="released-{{orderCount.RetailerId}}">
-
-                <table class="table table-condensed table-striped">
-                    <thead>
-                        <tr>
-
-                            <th ng-if="searchParamterId == '1'">Order Number</th>
-                            <th ng-if="searchParamterId == '2' ">Sales Order</th>
-                            <th ng-if="searchParamterId == '3'">Shopping Cart</th>
-                            <th ng-if="searchParamterId == '4'">Vendor Ref</th>
-                            <th>Status</th>
-                            <th>Order Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="order in orders">
-                            <td ng-if="searchParamterId == '1'"><a ng-href="#/apporvalDetail/{{order.OrderNumber}}">{{order.OrderNumber}}</a> </td>
-                            <td ng-if="searchParamterId == '2' ">{{order.SalesOrderNo}}</td>
-                            <td ng-if="searchParamterId == '3'">{{order.ShoppingCart}}</td>
-                            <td ng-if="searchParamterId == '4'">{{order.VendorRef}}</td>
-                            <td>{{order.Stauts}}</td>
-                            <td>{{order.OrderDate | date}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-        <br />
     </div>
 
-</div>
-</div>
-</div>
-    
 </kendo-mobile-view>

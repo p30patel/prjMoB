@@ -17,7 +17,9 @@ app.factory("homeDataService", [
                             deferred.resolve(result);
                         }).error(function (err, status) {
                             deferred.reject(err);
+                        
                         });
+                        
 
                         return deferred.promise;
                     };
@@ -48,8 +50,9 @@ app.factory("homeDataService", [
                           
                             localStorageService.set('orderHeaderData' + date, result);
                             deferred.resolve(result);
-                        }).error(function (err, status) {
-                            deferred.reject(err);
+                        }).error(function (xhr, status, error) {                                  
+                            deferred.reject(error);
+                      
                         });
 
                         return deferred.promise;

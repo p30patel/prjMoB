@@ -12,7 +12,7 @@ app.controller('homeController', [
                        init();
                        $scope.title = 'Home';
                        $scope.message = "";
-                       $scope.searchParamterId = 1;
+                       $scope.searchParameterId = 1;
                        $scope.activeTabId = "";
 
                        var getSelectedPara = function(para) {
@@ -38,7 +38,7 @@ app.controller('homeController', [
                        }
 
                        $scope.selectedPara = getSelectedPara('1');
-                       var accessToken = "";
+                      
                        $scope.clearSearch = function() {
                            $scope.searchValue = "";
                        }
@@ -99,7 +99,11 @@ app.controller('homeController', [
 
                        $scope.setSearhParamter = function (para) {
                            $scope.selectedPara = getSelectedPara(para);
-                           $scope.searchParamterId = para;
+                           $scope.searchParameterId = para;
+                       }
+                       $scope.orderDetail = function (orderType, parameterId, parameterValue){
+                        
+                               kendo.mobile.application.navigate("src/app/order/detail.html?orderType=" + order +"&parameterId=" + selectedParameterId + "&parameterValue=" + parameterValue);
                        }
                        $scope.key = function ($event) {
                            console.log($event.keyCode);

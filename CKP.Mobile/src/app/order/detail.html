@@ -1,3 +1,21 @@
-<kendo-mobile-view k-title="'{{title}}'" k-layout="'main'" ng-controller="orderController" k-on-show="intShow(kendoEvent)">
-    <h5>Order Detail</h5>
-    </kendo-mobile-view>
+<kendo-mobile-view k-title="'{{order.title}}'" k-layout="'main'" ng-controller="orderDetailController" k-on-show="intShow(kendoEvent)">
+    <br>
+    <div>
+        {{order.detail.OrderNumber}}<br>
+        {{order.detail.OrderDate}}
+        <br>
+     
+            <span ng-show="order.hasApproval">Waiting<br></span>
+            <span ng-show="!order.hasApproval">{{order.detail.Stauts}}<br></span>
+            {{order.detail.SalesOrderNo}}<br>
+            {{order.detail.VendorRef}}<br>
+
+    </div>
+    <br>
+    <div class="apporval" ng-show="order.hasApproval">
+        Comment<br>
+        <input type="text" ng-modal="order.approvalComment"/>
+        <button>YES</button>
+        <button>No</button>
+    </div>
+</kendo-mobile-view>

@@ -14,7 +14,18 @@ app.controller('homeController', [
                        $scope.message = "";
                        $scope.searchParameterId = 1;
                        $scope.activeTabId = "";
-
+                       $scope.parameters = [
+                           { id: "1", name : "Purchase Order"},
+                           { id: "2", name : "Sales Order"},
+                           { id: "3", name : "Shopping Cart"},
+                           { id: "4", name : "Vendor Ref"},
+            
+                       ];
+                      
+                       $scope.selectParamter = function(){
+                           getSelectedPara($scope.selectedPara);
+                               $scope.searchParameterId =  $scope.selectedPara ;
+                       }
                        var getSelectedPara = function(para) {
                            var selectedPara = "Purchase Order";
                            switch (para) {
@@ -34,6 +45,7 @@ app.controller('homeController', [
                                    selectedPara = "Purchase Order";
                                    break;
                            }
+                         
                            return selectedPara;
                        }
 
@@ -41,6 +53,7 @@ app.controller('homeController', [
                       
                        $scope.clearSearch = function() {
                            $scope.searchValue = "";
+                       
                        }
                        //translation
 
@@ -98,13 +111,20 @@ app.controller('homeController', [
                        };
 
                        $scope.setSearhParamter = function (para) {
+                           alert(para);
                            $scope.selectedPara = getSelectedPara(para);
                            $scope.searchParameterId = para;
                        }
                        $scope.orderDetail = function (orderType, parameterId, parameterValue){
-                        
-                               kendo.mobile.application.navigate("src/app/order/detail.html?orderType=" + order +"&parameterId=" + selectedParameterId + "&parameterValue=" + parameterValue);
+                      
+                               kendo.mobile.application.navigate("src/app/order/detail.html?orderType=" + orderType +"&parameterId=" + parameterId + "&parameterValue=" + parameterValue);
                        }
+                       
+                         $scope.orderList= function (orderType, parameterId, parameterValue){
+                      
+                               kendo.mobile.application.navigate("src/app/order/list.html?orderType=" + orderType +"&parameterId=" + parameterId + "&parameterValue=" + parameterValue);
+                       }
+                       
                        $scope.key = function ($event) {
                            console.log($event.keyCode);
 

@@ -1,3 +1,5 @@
-<kendo-mobile-view k-title="'{{title}}'" k-layout="'main'" k-on-show="intShow(kendoEvent)">
-    <h5>Order List</h5>
+<kendo-mobile-view k-title="'{{title}}'" k-layout="'main'" k-on-show="intShow(kendoEvent)" ng-controller="orderlistController" >
+   <div ng-repeat="order in order.list">
+       <p>{{order.OrderNumber}}</p>
+   </div>
     </kendo-mobile-view>

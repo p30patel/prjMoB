@@ -7,30 +7,63 @@ app.factory("orderDataService", [
                     var orderDataServiceFactory = {};
                     var date = kendo.toString(new Date(), "yyyy-MM-dd");
                     
-                    var forceGetMessages = function () {
+                    var forceGetOrderDetail = function () {
                         var deferred = $q.defer();
                         var authServiceBase = ngAuthSettings.authServiceBaseUri;
 
                         var authData = authService.getUserInfo();
                         var userId = authData.userId;
                       
-                        $http.get(authServiceBase + 'webapi/api/core/MobileApp/GetMessageListTaskAsync?userId=' + userId).success(function (result) {
-                            localStorageService.set('messages' + date, result);
+                        var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderHeaderDetailTaskAsync?searchText=" + 'testorder' + "&client_id=" + ngAuthSettings.clientId;
+                        $http.get(url).success(function (result) {
+                            localStorageService.set('orderDetail' + date, result);
                             deferred.resolve(result);
-                        })
-                            .error(function (err, status) {
-                                deferred.reject(err);
-                            });
+                        }).error(function (xhr, status, error) {                                  
+                            deferred.reject(error);
+                        });
                         return deferred.promise;
                     };
-                    var getMessages = function () {
+                    var getOrderDetail = function () {
                         var deferred = $q.defer();
                         
-                        var messages = localStorageService.get("messages" + date);
-                        if (messages) {
-                            deferred.resolve(messages);
+                        var orderDetail = localStorageService.get("orderDetail" + date);
+                        orderDetail = '';
+                        if (orderDetail) {
+                            deferred.resolve(orderDetail);
                         } else {
-                            forceGetMessages().then(function (result) {
+                            forceGetOrderDetail().then(function (result) {
+                                deferred.resolve(result);
+                            });
+                        }
+
+                        return deferred.promise;
+                    }
+                    
+                     var forceGetOrderList = function () {
+                        var deferred = $q.defer();
+                        var authServiceBase = ngAuthSettings.authServiceBaseUri;
+
+                        var authData = authService.getUserInfo();
+                        var userId = authData.userId;
+                      
+                         var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderHeaderDataTaskAsync?userId=" + 1 + "&client_id=" + ngAuthSettings.clientId;
+                        $http.get(url).success(function (result) {
+                            localStorageService.set('orderList' + date, result);
+                            deferred.resolve(result);
+                        }).error(function (xhr, status, error) {                                  
+                            deferred.reject(error);
+                        });
+                        return deferred.promise;
+                    };
+                    var getOrderList = function () {
+                        var deferred = $q.defer();
+                        
+                        var orderList = localStorageService.get("orderList" + date);
+                        orderList = '';
+                        if (orderList) {
+                            deferred.resolve(orderList);
+                        } else {
+                            forceGetOrderList().then(function (result) {
                                 deferred.resolve(result);
                             });
                         }
@@ -38,8 +71,12 @@ app.factory("orderDataService", [
                         return deferred.promise;
                     }
 
-                    orderDataServiceFactory.getMessages = getMessages;
-                    orderDataServiceFactory.forceGetMessages = forceGetMessages;
+
+                    orderDataServiceFactory.getOrderDetail = getOrderDetail;
+                    orderDataServiceFactory.forceGetOrderDetail = forceGetOrderDetail;
+                    
+                    orderDataServiceFactory.getOrderList = getOrderList;
+                    orderDataServiceFactory.forceGetOrderList = forceGetOrderList;
 
                     return orderDataServiceFactory;
                 }

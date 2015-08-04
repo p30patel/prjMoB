@@ -24,7 +24,7 @@ app.factory('authInterceptorService', ['$q', '$location','$injector',
 
     var responseError = function (rejection) {
        
-    
+    console.log('current view : ' + kendo.mobile.application.view().id);
         if (rejection.status === 401) {
             var authService = $injector.get('authService');
             var authData = localStorageService.get('authorizationData');

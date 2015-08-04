@@ -12,28 +12,11 @@
                     </ul>
                 </div>
                 <div class="">
-
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{selectedPara}} <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a ng-click="setSearhParameter('1')">Purchase Order</a>
-                            </li>
-                            <li>
-                                <a ng-click="setSearhParameter('2')">Sales Order</a>
-                            </li>
-                            <li>
-                                <a ng-click="setSearhParameter('3')">ShoppingCart ID</a>
-                            </li>
-                            <li>
-                                <a ng-click="setSearhParameter('4')">Vendor Ref</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <span class="k-textbox k-space-right" style="width: 90%;" >
+                    <select ng-model="selectedPara"  ng-change="selectParamter()" ng-options="parameter.id as parameter.name for parameter in parameters" ng-init="selectedPara = selectedPara || '1'">
+                    </select>
+                    {{selectedPara}}
+                   
+                     <span class="k-textbox k-space-right" style="width: 90%;" >
                         <input type="text" id="icon-right"  ng-model="searchValue" ng-keypress="key($event)"/>
                         <a href="#" class="k-icon k-i-search" ng-show="!searchValue">&nbsp;</a>
                         <a href="#" class="k-icon k-i-cancel"  ng-show="searchValue" ng-click="clearSearch()" k-align="'right'" >&nbsp;</a>
@@ -67,7 +50,8 @@
                                     <tr>
 
                                         <th ng-if="searchParameterId == '1'">Order Number</th>
-                                        <th ng-if="searchParameterId == '1' || searchParameterId == '2' ">Sales Order</th>
+                                        <th ng-if="searchParameterId == '2' ">Sales Order</th>
+                                        <th ng-if="searchParameterId == '1' ">Sales Order</th>
                                         <th ng-if="searchParameterId == '2'">Order Number</th>
                                         <th ng-if="searchParameterId == '3'">Shopping Cart</th>
                                         <th ng-if="searchParameterId == '3'">Order Number</th>
@@ -81,13 +65,18 @@
                                         <td ng-if="searchParameterId == '1'">
                                             <a href="" ng-click="orderDetail(1, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
                                         </td>
-                                        <td ng-if="searchParameterId == '1' || searchParameterId == '2' ">
-                                            <a href="" ng-click="orderDetail(1, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                                        <td ng-if="searchParameterId == '2' ">
+                                            <a href="" ng-click="orderList(1, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
                                         </td>
+                                        <td ng-if="searchParameterId == '1'">{{order.SalesOrderNo}}</td>
                                         <td ng-if="searchParameterId == '2'">{{order.OrderNumber}}</td>
-                                        <td ng-if="searchParameterId == '3'">{{order.ShoppingCart}}</td>
+                                        <td ng-if="searchParameterId == '3'">
+                                            <a href="" ng-click="orderList(1, searchParameterId, order.SalesOrderNo)">{{order.ShoppingCart}}</a>
+                                        </td>
                                         <td ng-if="searchParameterId == '3'">{{order.OrderNumber}}</td>
-                                        <td ng-if="searchParameterId == '4'">{{order.VendorRef}}</td>
+                                        <td ng-if="searchParameterId == '4'">
+                                            <a href="" ng-click="orderList(1, searchParameterId, order.SalesOrderNo)">{{order.VendorRef}}</a>
+                                        </td>
                                         <td ng-if="searchParameterId == '4'">{{order.OrderNumber}}</td>
                                         <td>{{order.DateInSystem | date}}</td>
                                     </tr>
@@ -107,11 +96,16 @@
                                         <td ng-if="searchParameterId == '1'">
                                             <a href="" ng-click="orderDetail(2, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
                                         </td>
-                                        <td ng-if="searchParameterId == '1' || searchParameterId == '2' ">
-                                            <a href="" ng-click="orderDetail(2, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                                        <td ng-if="searchParameterId == '2'">
+                                            <a href="" ng-click="orderList(2, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
                                         </td>
-                                        <td ng-if="searchParameterId == '3'">{{order.ShoppingCart}}</td>
-                                        <td ng-if="searchParameterId == '4'">{{order.VendorRef}}</td>
+
+                                        <td ng-if="searchParameterId == '3'">
+                                            <a href="" ng-click="orderList(2, searchParameterId, order.SalesOrderNo)">{{order.ShoppingCart}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '4'">
+                                            <a href="" ng-click="orderList(2, searchParameterId, order.SalesOrderNo)">{{order.VendorRef}}</a>
+                                        </td>
                                         <td>{{order.Status}}</td>
                                         <td>{{order.OrderDate | date}}</td>
                                     </tr>
@@ -126,6 +120,7 @@
 
                                         <th ng-if="searchParameterId == '1'">Order Number</th>
                                         <th ng-if="searchParameterId == '2' ">Sales Order</th>
+
                                         <th ng-if="searchParameterId == '3'">Shopping Cart</th>
                                         <th ng-if="searchParameterId == '4'">Vendor Ref</th>
                                         <th>Status</th>
@@ -137,11 +132,16 @@
                                         <td ng-if="searchParameterId == '1'">
                                             <a href="" ng-click="orderDetail(3, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
                                         </td>
-                                        <td ng-if="searchParameterId == '1' || searchParameterId == '2' ">
-                                            <a href="" ng-click="orderDetail(3, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                                        <td ng-if="searchParameterId == '2'">
+                                            <a href="" ng-click="orderList(3, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
                                         </td>
-                                        <td ng-if="searchParameterId == '3'">{{order.ShoppingCart}}</td>
-                                        <td ng-if="searchParameterId == '4'">{{order.VendorRef}}</td>
+
+                                        <td ng-if="searchParameterId == '3'">
+                                            <a href="" ng-click="orderList(3, searchParameterId, order.SalesOrderNo)">{{order.ShoppingCart}}</a>
+                                        </td>
+                                        <td ng-if="searchParameterId == '4'">
+                                            <a href="" ng-click="orderList(3, searchParameterId, order.SalesOrderNo)">{{order.VendorRef}}</a>
+                                        </td>
                                         <td>{{order.Status}}</td>
                                         <td>{{order.OrderDate | date}}</td>
                                     </tr>

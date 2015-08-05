@@ -36,11 +36,7 @@ app.controller('loginController', [
 
                        $scope.languages = {};
                        $scope.passwordHint = "";
-                       $scope.checkAuth = function() {  
-                           alert('e');
-                           //alert(e.kendMobileView.params.userId);
-                       }
-                       
+                      
                        //forgot password 
                        
                        $scope.forgotPasswordModalOpen = function () {
@@ -57,7 +53,6 @@ app.controller('loginController', [
                            var email = $scope.loginData.email;
                            loginDataService.resetPassword(username, email).then(function(result) {
                                alerting.addSuccess(result);
-                               
                            },
                                                                                 function (err) {
                                                                                     alerting.addSuccess(err.error_description);
@@ -82,6 +77,14 @@ app.controller('loginController', [
                                loginDataService.forceGetLanguages().then(function (result) {
                                    $scope.languages = result;
                                });
+                           }
+                           var selectedLanguage = localStorageService.get('selectedLanguage');
+        
+                           if (selectedLanguage) {
+                               $scope.selectedLanague = selectedLanguage;
+                           } else {
+                               
+                               $scope.selectedLanague = 'en-US';
                            }
                        };
                        languages(); //init langguages
@@ -109,6 +112,7 @@ app.controller('loginController', [
                                pageName : 'Login',
                                selectedLanague: $scope.selectedLanague
                            };
+                           localStorageService.set('selectedLanguage', $scope.selectedLanague);
                            $scope.translations = translateService.getTranslation(translateData);
 
                            $scope.form.login.resoruceValue = translateService.getTranslationByName($scope.form.login.resoruceName);

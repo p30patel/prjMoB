@@ -97,6 +97,7 @@ app.factory('authService', [
                             _authentication.useRefreshTokens = authData.useRefreshTokens;
                             if (userProfileData) {
                                 _authentication.userId = userProfileData.userId;
+                                _authentication.organizationId = userProfileData.OrganizationId;
                             }
                         }
                     };

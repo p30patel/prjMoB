@@ -136,6 +136,33 @@ app.controller('homeController', [
                                }, 1000);
                            }
                        }
+                       
+                       //
+                        $scope.selection=[];
+                       $scope.toggleSelection = function toggleSelection(so) {
+                           var idx = $scope.selection.indexOf(so);
+                                                     // is currently selected                          
+                           if (idx > -1) {                           
+                               $scope.selection.splice(idx, 1);                           
+                           } // is newly selected                           
+                           else {                           
+                               $scope.selection.push(so);                           
+                           }                           
+                       };
+                       $scope.viewAll = function(orderType){
+                             kendo.mobile.application.navigate("src/app/order/order.html?orderType=" + orderType +"&parameterId=" + 1 + "&parameterValue=" + 0 + "&orders=" + $scope.orders);
+                           
+                       } 
+                       $scope.approve = function(){
+                         var salesorders = "";
+
+                           var salesorderList =  $scope.selection;
+                           angular.forEach(salesorderList, function(value, key) {                               
+                              
+                               salesorders += value + ',';
+                           });
+                         kendo.mobile.application.navigate("src/app/order/approve.html?orders=" + salesorders);
+                       }
 
                        //pull to refresh
                        $scope.refresh = function() {

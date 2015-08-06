@@ -50,7 +50,8 @@ app.factory("homeDataService", [
                           
                             localStorageService.set('orderHeaderData' + date, result);
                             deferred.resolve(result);
-                        }).error(function (xhr, status, error) {                                  
+                        }).error(function (xhr, status, error) {   
+                           
                             deferred.reject(error);
                       
                         });

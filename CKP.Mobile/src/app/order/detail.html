@@ -7,15 +7,15 @@
      
             <span ng-show="order.hasApproval">Waiting<br></span>
             <span ng-show="!order.hasApproval">{{order.detail.Stauts}}<br></span>
-            {{order.detail.SalesOrderNo}}<br>
+             {{order.detail.SalesOrderNo}}<br>
             {{order.detail.VendorRef}}<br>
 
     </div>
     <br>
     <div class="apporval" ng-show="order.hasApproval">
         Comment<br>
-        <input type="text" ng-modal="order.approvalComment"/>
-        <button>YES</button>
-        <button>No</button>
+        <input type="text" ng-modal="order.detail.comment"/>
+        <button ng-click="apporve(true)">YES</button>
+        <button ng-click="apporve(false)">No</button>
     </div>
 </kendo-mobile-view>

@@ -46,7 +46,7 @@ app.factory("orderDataService", [
                         var authData = authService.getUserInfo();
                         var userId = authData.userId;
                       
-                         var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderHeaderDataTaskAsync?userId=" + 1 + "&client_id=" + ngAuthSettings.clientId;
+                         var url = authServiceBase + "webapi/api/core/MobileApp/GetOrderHeaderDataTaskAsync?userId=" + userId + "&client_id=" + ngAuthSettings.clientId;
                         $http.get(url).success(function (result) {
                             localStorageService.set('orderList' + date, result);
                             deferred.resolve(result);
@@ -70,8 +70,28 @@ app.factory("orderDataService", [
 
                         return deferred.promise;
                     }
+                    
+                    
+                     var approveDecline = function (data) {
+                        var deferred = $q.defer();
+                        var authServiceBase = ngAuthSettings.authServiceBaseUri;
+
+                        var authData = authService.getUserInfo();
+                        var userId = authData.userId;
+                      
+                        var url = authServiceBase + "webapi/api/core/MobileApp/UpdateApproveOrderList";
+                        $http.post(url, data).success(function (result) {   
+                            alert(result.success);
+                            deferred.resolve(result);
+                        }).error(function (xhr, status, error) {                                  
+                            deferred.reject(error);
+                        });
+                        return deferred.promise;
+                    };
 
 
+                    orderDataServiceFactory.approveDecline = approveDecline;
+                    
                     orderDataServiceFactory.getOrderDetail = getOrderDetail;
                     orderDataServiceFactory.forceGetOrderDetail = forceGetOrderDetail;
                     

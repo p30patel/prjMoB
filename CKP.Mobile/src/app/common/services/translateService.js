@@ -3,7 +3,7 @@ app.factory('translateService',
     function ($http, $q, localStorageService, ngAuthSettings) {
 
         var translateFactory = {};
-
+        var requestCount = 0;
         var pageVersions = [
         { pageName: "Login", version: "1" },
           { pageName: "Home", version: "1" }
@@ -38,6 +38,7 @@ app.factory('translateService',
 
             //}).error(function (err, status) {
             //    deferred.reject('Faild to retrieve password hint!' + err);
+            requestCount = 1;
             //});
             deferred.resolve(translations);
             return deferred.promise;
@@ -70,10 +71,11 @@ app.factory('translateService',
         }
 
 
-        var getTranslationByName = function (resoruceName) {
-            var resourceValue = resoruceName;
+        var getTranslationByName = function (resourceName) {
+            
+            var resourceValue = resourceName;
             angular.forEach(translations, function (item) {
-                if (item.resourceName === resoruceName) {
+                if (item.resourceName === resourceName) {
                     resourceValue = item.resourceValue;
                     return resourceValue;
                 }

@@ -36,7 +36,13 @@ app.controller('loginController', [
 
                        $scope.languages = {};
                        $scope.passwordHint = "";
-                      
+                       
+                       $scope.loginData = {
+                           userName: "",
+                           password: "",
+                       };
+                       $scope.translations = {};
+                       $scope.message = "";
                        //forgot password 
                        
                        $scope.forgotPasswordModalOpen = function () {
@@ -53,15 +59,23 @@ app.controller('loginController', [
                            var email = $scope.loginData.email;
                            loginDataService.resetPassword(username, email).then(function(result) {
                                alerting.addSuccess(result);
+                               kendo.mobile.application.pane.loader.hide();
+                               $("#modalview-forgotpassword").kendoMobileModalView("close"); 
                            },
                                                                                 function (err) {
                                                                                     alerting.addSuccess(err.error_description);
-                                                                                }).finally(function () {
                                                                                     kendo.mobile.application.pane.loader.hide();
                                                                                     $("#modalview-forgotpassword").kendoMobileModalView("close"); 
                                                                                 });
                        };
                        //end forgot password
+                       
+                       var loginData = {
+                           userName : '',
+                           password: '',
+                           remmberme : false                        
+                           
+                       };
 
                        var languages = function () {
                            $scope.languages = [{ Name: "English", Culture: "en-US", Id: 1, Error: "" }];
@@ -83,27 +97,25 @@ app.controller('loginController', [
                            if (selectedLanguage) {
                                $scope.selectedLanague = selectedLanguage;
                            } else {
-                               
                                $scope.selectedLanague = 'en-US';
                            }
+                           //set user name pass if set remmber on.
+                           var loginData = localStorageService.get('loginData');
+     
+                           if (loginData) {
+                               if (loginData.remmberme) {
+                                   $scope.loginData.userName = loginData.userName;
+                                   $scope.loginData.password = loginData.password;
+                                   $scope.loginData.useRefreshTokens = loginData.remmberme
+                               }
+                           } else {
+                               $scope.loginData.userName = ""
+                               $scope.loginData.password = "";
+                               $scope.loginData.useRefreshTokens = false;
+                           }
                        };
-                       languages(); //init langguages
-                       
-                       //pull to refresh
-                       $scope.refresh = function() {
-                           var currentDate = $filter('date')(new Date(), 'dd-MMM-yy HH:mm:ss');
-                           alerting.addSuccess("Last updated " + currentDate);
-                           $timeout(function() {
-                               $scope.scroller.pullHandled();
-                           }, 400);
-                       };  //pull to refresh end
-
-                       $scope.loginData = {
-                           userName: "",
-                           password: ""
-                       };
-                       $scope.translations = {};
-
+                       languages(); //init languages
+                                        
                        //trsnasaltion
                        var data = [{ resourceName: "login", resourceValue: "" }];
 
@@ -113,28 +125,37 @@ app.controller('loginController', [
                                selectedLanague: $scope.selectedLanague
                            };
                            localStorageService.set('selectedLanguage', $scope.selectedLanague);
-                           $scope.translations = translateService.getTranslation(translateData);
-
-                           $scope.form.login.resoruceValue = translateService.getTranslationByName($scope.form.login.resoruceName);
-                           $scope.form.username.resoruceValue = translateService.getTranslationByName($scope.form.username.resoruceName);
-                           $scope.form.password.resoruceValue = translateService.getTranslationByName($scope.form.password.resoruceName);
-                           $scope.form.passwordHint.resoruceValue = translateService.getTranslationByName($scope.form.passwordHint.resoruceName);
-                           $scope.form.signin.resoruceValue = translateService.getTranslationByName($scope.form.signin.resoruceName);
-                           $scope.form.remmberMe.resoruceValue = translateService.getTranslationByName($scope.form.remmberMe.resoruceName);
+                           
+                           translateService.getTranslation(translateData).then(function() {
+                               $scope.form.login.resoruceValue = translateService.getTranslationByName($scope.form.login.resoruceName);
+                               $scope.form.username.resoruceValue = translateService.getTranslationByName($scope.form.username.resoruceName);
+                               $scope.form.password.resoruceValue = translateService.getTranslationByName($scope.form.password.resoruceName);
+                               $scope.form.passwordHint.resoruceValue = translateService.getTranslationByName($scope.form.passwordHint.resoruceName);
+                               $scope.form.signin.resoruceValue = translateService.getTranslationByName($scope.form.signin.resoruceName);
+                               $scope.form.remmberMe.resoruceValue = translateService.getTranslationByName($scope.form.remmberMe.resoruceName);
+                           });
                        }
 
                        //loign event
                        $scope.login = function () {
+                           var loginData = {
+                               userName : $scope.loginData.userName,
+                               password:  $scope.loginData.password,
+                               remmberme : $scope.loginData.useRefreshTokens               
+                           }
+                           localStorageService.set('loginData', loginData);
+                           
                            kendo.mobile.application.pane.loader.show();
+                           
                            $scope.passwordHint = "";
                            authService.login($scope.loginData).then(function (response) {
+                               kendo.mobile.application.pane.loader.hide();
                                kendo.mobile.application.navigate("src/app/home/home.html");
-                           },
-                                                                    function (err) {
-                                                                        $scope.message = err.error_description;
-                                                                    }).finally(function () {
-                                                                        kendo.mobile.application.pane.loader.hide();
-                                                                    });
+                           }).catch(function(err) {
+                               $scope.message = err.error_description;
+                               alerting.addDanger(err.error_description);                     
+                               kendo.mobile.application.pane.loader.hide();
+                           });
                        };
 
                        $scope.showPasswordHint = function () {
@@ -143,6 +164,10 @@ app.controller('loginController', [
                            loginDataService.getPasswordHint(username).then(function (result) {
                                $scope.passwordHint = result;
                                alerting.addSuccess('Hint is : ' + result);
+                               kendo.mobile.application.pane.loader.hide();
+                           }).catch(function(err) {
+                               $scope.message = 'Error while getting the Hint!';
+                               alerting.addDanger('Error while getting the Hint!');                     
                                kendo.mobile.application.pane.loader.hide();
                            });
                        };

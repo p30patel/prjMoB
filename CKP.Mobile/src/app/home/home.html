@@ -14,9 +14,7 @@
                 <div class="">
                     <select ng-model="selectedPara"  ng-change="selectParamter()" ng-options="parameter.id as parameter.name for parameter in parameters" ng-init="selectedPara = selectedPara || '1'">
                     </select>
-                    {{selectedPara}}
-                   
-                     <span class="k-textbox k-space-right" style="width: 90%;" >
+                    {{selectedPara}} <span class="k-textbox k-space-right" style="width: 90%;" >
                         <input type="text" id="icon-right"  ng-model="searchValue" ng-keypress="key($event)"/>
                         <a href="#" class="k-icon k-i-search" ng-show="!searchValue">&nbsp;</a>
                         <a href="#" class="k-icon k-i-cancel"  ng-show="searchValue" ng-click="clearSearch()" k-align="'right'" >&nbsp;</a>
@@ -63,18 +61,28 @@
                                 <tbody>
                                     <tr ng-repeat="order in orders">
                                         <td ng-if="searchParameterId == '1'">
+                                            <input id="{{order.SalesOrderNo}}" type="checkbox" value="{{order.SalesOrderNo}}" 
+                                                   ng-checked="selection.indexOf(order.SalesOrderNo) > -1" ng-click="toggleSelection(order.SalesOrderNo)" />
                                             <a href="" ng-click="orderDetail(1, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
                                         </td>
                                         <td ng-if="searchParameterId == '2' ">
+                                            <input id="{{order.SalesOrderNo}}" type="checkbox" value="{{order.SalesOrderNo}}" 
+                                                   ng-checked="selection.indexOf(order.SalesOrderNo) > -1" ng-click="toggleSelection(order.SalesOrderNo)" />
                                             <a href="" ng-click="orderList(1, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
                                         </td>
-                                        <td ng-if="searchParameterId == '1'">{{order.SalesOrderNo}}</td>
+                                        <td ng-if="searchParameterId == '1'">
+                                            {{order.SalesOrderNo}}
+                                        </td>
                                         <td ng-if="searchParameterId == '2'">{{order.OrderNumber}}</td>
                                         <td ng-if="searchParameterId == '3'">
+                                            <input id="{{order.SalesOrderNo}}" type="checkbox" value="{{order.SalesOrderNo}}" 
+                                                   ng-checked="selection.indexOf(order.SalesOrderNo) > -1" ng-click="toggleSelection(order.SalesOrderNo)" />
                                             <a href="" ng-click="orderList(1, searchParameterId, order.SalesOrderNo)">{{order.ShoppingCart}}</a>
                                         </td>
                                         <td ng-if="searchParameterId == '3'">{{order.OrderNumber}}</td>
                                         <td ng-if="searchParameterId == '4'">
+                                            <input id="{{order.SalesOrderNo}}" type="checkbox" value="{{order.SalesOrderNo}}" 
+                                                   ng-checked="selection.indexOf(order.SalesOrderNo) > -1" ng-click="toggleSelection(order.SalesOrderNo)" />
                                             <a href="" ng-click="orderList(1, searchParameterId, order.SalesOrderNo)">{{order.VendorRef}}</a>
                                         </td>
                                         <td ng-if="searchParameterId == '4'">{{order.OrderNumber}}</td>
@@ -82,7 +90,16 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <div ng-repeat="name in selection" class="selected-item">
+
+                                {{name}}
+
+                            </div>
+
+                             <kendo-mobile-button k-on-click="viewAll('1')" k-align="'right'">View All</kendo-mobile-button>
+                              <kendo-mobile-button k-on-click="approve()" k-align="'right'">Bulk Approve</kendo-mobile-button>
                         </div>
+
                         <div role="tabpanel" class="tab-pane order" id="new-{{orderCount.RetailerId}}">
                             <table class="table table-condensed table-striped">
                                 <th ng-if="searchParameterId == '1'">Order Number</th>

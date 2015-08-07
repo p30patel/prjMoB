@@ -116,8 +116,8 @@ app.controller('homeController', [
                                $scope.selection.push(so);                           
                            }                           
                        };
-                       $scope.viewAll = function(orderType) {
-                           kendo.mobile.application.navigate("src/app/order/order.html?orderType=" + orderType + "&parameterId=" + 1 + "&parameterValue=" + 0 + "&orders=" + $scope.orders);
+                       $scope.viewAll = function(orderType, parameterId) {
+                           kendo.mobile.application.navigate("src/app/order/order.html?orderType=" + orderType + "&parameterId=" + parameterId + "&parameterValue=" + "" + "&orders=" + $scope.orders);
                        } 
                        $scope.approve = function() {
                            var salesorders = "";

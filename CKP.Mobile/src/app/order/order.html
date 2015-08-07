@@ -1,7 +1,10 @@
 <kendo-mobile-view k-title="'{{order.title}}'" k-layout="'main'" ng-controller="orderlistController" k-on-show="intShow(kendoEvent)">
 
     <br>
-    <div role="tabpanel" class="tab-pane order" id="approval" ng-if="order.orderType =='1'">
+    
+    
+    <div id="approval" ng-if="order.orderType =='1' ">
+     
         <table class="table table-condensed table-striped">
             <thead>
                 <tr>
@@ -50,13 +53,83 @@
             </tbody>
         </table>
         <kendo-mobile-button k-on-click="ViewNext('1')" k-align="'right'">View Next 5</kendo-mobile-button>
+        <div class="apporval" ng-show="order.hasApproval">
+            Comment<br>
+            <input type="text" ng-modal="order.detail.comment"/>
+            <button ng-click="apporve(true)">YES</button>
+            <button ng-click="apporve(false)">No</button>
+        </div>
+
+    </div>
+
+    <div id="new"  ng-if="order.orderType == '2' ">
+        <table class="table table-condensed table-striped">
+            <th ng-if="searchParameterId == '1'">Order Number</th>
+            <th ng-if="searchParameterId == '2' ">Sales Order</th>
+            <th ng-if="searchParameterId == '3'">Shopping Cart</th>
+            <th ng-if="searchParameterId == '4'">Vendor Ref</th>
+            <th>Status</th>
+            <th>Order Date</th>
+            <tbody>
+                <tr ng-repeat="order in orders">
+                    <td ng-if="searchParameterId == '1'">
+                        <a href="" ng-click="orderDetail(2, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
+                    </td>
+                    <td ng-if="searchParameterId == '2'">
+                        <a href="" ng-click="orderList(2, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                    </td>
+
+                    <td ng-if="searchParameterId == '3'">
+                        <a href="" ng-click="orderList(2, searchParameterId, order.SalesOrderNo)">{{order.ShoppingCart}}</a>
+                    </td>
+                    <td ng-if="searchParameterId == '4'">
+                        <a href="" ng-click="orderList(2, searchParameterId, order.SalesOrderNo)">{{order.VendorRef}}</a>
+                    </td>
+                    <td>{{order.Status}}</td>
+                    <td>{{order.OrderDate | date}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <kendo-mobile-button k-on-click="viewAll('2')" k-align="'right'">View All</kendo-mobile-button>
+    </div>
+
+    <div id="released"  ng-if="order.orderType =='3' ">
+
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+
+                    <th ng-if="searchParameterId == '1'">Order Number</th>
+                    <th ng-if="searchParameterId == '2' ">Sales Order</th>
+
+                    <th ng-if="searchParameterId == '3'">Shopping Cart</th>
+                    <th ng-if="searchParameterId == '4'">Vendor Ref</th>
+                    <th>Status</th>
+                    <th>Order Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in order.orders">
+                    <td ng-if="searchParameterId == '1'">
+                        <a href="" ng-click="orderDetail(3, searchParameterId, order.OrderNumber)">{{order.OrderNumber}}</a>
+                    </td>
+                    <td ng-if="searchParameterId == '2'">
+                        <a href="" ng-click="orderList(3, searchParameterId, order.SalesOrderNo)">{{order.SalesOrderNo}}</a>
+                    </td>
+
+                    <td ng-if="searchParameterId == '3'">
+                        <a href="" ng-click="orderList(3, searchParameterId, order.SalesOrderNo)">{{order.ShoppingCart}}</a>
+                    </td>
+                    <td ng-if="searchParameterId == '4'">
+                        <a href="" ng-click="orderList(3, searchParameterId, order.SalesOrderNo)">{{order.VendorRef}}</a>
+                    </td>
+                    <td>{{order.Status}}</td>
+                    <td>{{order.OrderDate | date}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <kendo-mobile-button k-on-click="viewAll('3')" k-align="'right'">View All</kendo-mobile-button>
     </div>
 
     <br>
-    <div class="apporval" ng-show="order.hasApproval">
-        Comment<br>
-        <input type="text" ng-modal="order.detail.comment"/>
-        <button ng-click="apporve(true)">YES</button>
-        <button ng-click="apporve(false)">No</button>
-    </div>
 </kendo-mobile-view>

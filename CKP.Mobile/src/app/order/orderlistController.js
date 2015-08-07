@@ -5,10 +5,11 @@ app.controller('orderlistController', [
                        $scope.order = {};
                        
                        $scope.order.hasApproval = false;
-                       $scope.order.title = 'Detail';
+                       $scope.order.title = 'Order List';
                        $scope.order.detail = {};
                        $scope.order.orders = {};
                        var init = function() {
+                           
                            if (!authService.authentication.isAuth) {
                                authService.logout();
                                alerting.addSuccess("Please Login!");
@@ -19,6 +20,7 @@ app.controller('orderlistController', [
                        var orderType = '1';
                        var parameterId = 0;
                        var parameterValue = "";
+                      
                        $scope.intShow = function (e) {
                            orderType = e.view.params.orderType;
                            parameterId = e.view.params.parameterId;
@@ -28,6 +30,7 @@ app.controller('orderlistController', [
                               $scope.order.title = 'Shopping Cart Detail';
                               $scope.order.orderType = orderType;
                               $scope.searchParameterId = parameterId;
+                           alert(orderType + ";" + parameterId + ":" + parameterValue);
                           
                            if (orderType === '1'){
                                   $scope.order.hasApproval = true;

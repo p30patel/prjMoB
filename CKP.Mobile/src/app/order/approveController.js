@@ -6,7 +6,10 @@ app.controller('approveController', [
                        
                        $scope.order.hasApproval = false;
                        $scope.order.title = 'Approve Orders';
+                       $scope.order.comment = "";
+                       $scope.order.mesages = "";
                        $scope.salesorders = {};
+                       $scope.order.hasUpdateStatus = false;
                        var init = function() {
                            if (!authService.authentication.isAuth) {
                                authService.logout();
@@ -15,30 +18,30 @@ app.controller('approveController', [
                            }
                        };
                        init();
-                   
+                       
+                       var orders = "";
+                       
                        $scope.intShow = function (e) {
-                           var orders = [];
-                           $scope.orders = e.view.params.orders;                          
+                           $scope.orders = e.view.params.orders;  
+                           orders = e.view.params.orders;                
                        }
                        //retailers with count
                  
                        //appprove order
                        $scope.apporve = function (statusUpdate) {
                            var salesorders = [];
-                           /*
-                           var salesorderList = [1,2,3,4];
+                        
+                           var salesorderList = orders.split(',');
                            angular.forEach(salesorderList, function(value, key) {
-                           var solist = {
-                           SalesOrderNo: value,
-                           Comment: "comment1"
-                           };
-                           salesorders.push(solist);
-                           });*/
-                           var solist = {
-                               SalesOrderNo:$scope.order.detail.SalesOrderNo,
-                               Comment: order.detail.comment
-                           };
-                           salesorders.push(solist);
+                               if (value !== '') {
+                                   var solist = {
+                                       SalesOrderNo: value,
+                                       Comment: $scope.order.comment 
+                                   };
+                                   salesorders.push(solist);
+                               }
+                           });
+                         
                            var jsonIn = {
                                UserName: "jim rl tjx",
                                OrgId: 6884,
@@ -47,13 +50,15 @@ app.controller('approveController', [
                            }
                            
                            orderDataService.approveDecline(jsonIn).then(function (result) {
-                               alert('Approval' + result.success);
                                $scope.order.detail = result;
-                               alerting.addSuccess("Completed laoding order Details.");
-                                 kendo.mobile.application.pane.loader.hide();
+                               alerting.addSuccess("Completed Approved/ Declined");
+                               $scope.order.mesages = "Successfully Approve or Decline Orders!";
+                               $scope.order.hasUpdateStatus = true;
+                               kendo.mobile.application.pane.loader.hide();
                            }).catch(function (error) {
-                               $scope.mesages = "Faild to Approve or Decline!";
-                                 kendo.mobile.application.pane.loader.hide();
+                               alerting.addSuccess("Faild to Approve or Decline!");
+                               $scope.order.message = "Faild to Approve or Decline!";
+                               kendo.mobile.application.pane.loader.hide();
                            });
                        }
 

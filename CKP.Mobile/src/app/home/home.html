@@ -1,4 +1,5 @@
 <kendo-mobile-view k-title="'{{title}}'"  k-layout="'main'" ng-controller="homeController">
+     
     <div kendo-mobile-scroller="scroller" k-pull-to-refresh="true" k-pull="refresh" style="height: 900px">
         <div class="container">
             <br>
@@ -90,14 +91,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div ng-repeat="name in selection" class="selected-item">
-
-                                {{name}}
-
-                            </div>
-
-                             <kendo-mobile-button k-on-click="viewAll('1')" k-align="'right'">View All</kendo-mobile-button>
-                              <kendo-mobile-button k-on-click="approve()" k-align="'right'">Bulk Approve</kendo-mobile-button>
+                            
+                            <kendo-mobile-button k-on-click="viewAll('1')" k-align="'right'">View All</kendo-mobile-button>
+                            <kendo-mobile-button k-on-click="approve()" k-align="'right'">Bulk Approve</kendo-mobile-button>
                         </div>
 
                         <div role="tabpanel" class="tab-pane order" id="new-{{orderCount.RetailerId}}">

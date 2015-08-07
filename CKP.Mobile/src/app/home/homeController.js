@@ -1,7 +1,7 @@
 
 app.controller('homeController', [
-                   '$scope', '$http', '$location', 'authService', 'localStorageService', '$timeout', 'homeDataService', 'alerting', '$filter',
-                   function($scope, $http, $location, authService, localStorageService, $timeout, homeDataService, alerting, $filter) {
+                   '$scope', '$http', '$location', 'authService', 'localStorageService', '$timeout', 'homeDataService','parameterService', 'alerting', '$filter',
+                   function($scope, $http, $location, authService, localStorageService, $timeout, homeDataService, parameterService, alerting, $filter) {
                        var init = function() {
                            if (!authService.authentication.isAuth) {
                                authService.logout();
@@ -10,50 +10,20 @@ app.controller('homeController', [
                            }
                        };
                        init();
+                       
                        $scope.title = 'Home';
                        $scope.message = "";
                        $scope.searchParameterId = 1;
                        $scope.activeTabId = "";
-                       $scope.parameters = [
-                           { id: "1", name : "Purchase Order"},
-                           { id: "2", name : "Sales Order"},
-                           { id: "3", name : "Shopping Cart"},
-                           { id: "4", name : "Vendor Ref"},
-            
-                       ];
-                      
-                       $scope.selectParamter = function(){
-                           getSelectedPara($scope.selectedPara);
-                               $scope.searchParameterId =  $scope.selectedPara ;
+                       $scope.parameters = parameterService.getSearchParameters();
+                       
+                      $scope.selectParamter = function() {
+                           parameterService.getSearchParameterName($scope.selectedPara)
+                           $scope.searchParameterId = $scope.selectedPara;
                        }
-                       var getSelectedPara = function(para) {
-                           var selectedPara = "Purchase Order";
-                           switch (para) {
-                               case '1':
-                                   selectedPara = "Purchase Order";
-                                   break;
-                               case '2':
-                                   selectedPara = "Sales Order";
-                                   break;
-                               case '3':
-                                   selectedPara = "Shopping Cart";
-                                   break;
-                               case '4':
-                                   selectedPara = "Vendor Ref";
-                                   break;
-                               default:
-                                   selectedPara = "Purchase Order";
-                                   break;
-                           }
-                         
-                           return selectedPara;
-                       }
-
-                       $scope.selectedPara = getSelectedPara('1');
-                      
+                       $scope.languages =parameterService.getSearchParameters();
                        $scope.clearSearch = function() {
                            $scope.searchValue = "";
-                       
                        }
                        //translation
 
@@ -111,18 +81,16 @@ app.controller('homeController', [
                        };
 
                        $scope.setSearhParamter = function (para) {
-                           alert(para);
-                           $scope.selectedPara = getSelectedPara(para);
+                           $scope.selectedPara = parameterService.getSearchParameterName(para);
+                         
                            $scope.searchParameterId = para;
                        }
-                       $scope.orderDetail = function (orderType, parameterId, parameterValue){
-                      
-                               kendo.mobile.application.navigate("src/app/order/detail.html?orderType=" + orderType +"&parameterId=" + parameterId + "&parameterValue=" + parameterValue);
+                       $scope.orderDetail = function (orderType, parameterId, parameterValue) {
+                           kendo.mobile.application.navigate("src/app/order/detail.html?orderType=" + orderType + "&parameterId=" + parameterId + "&parameterValue=" + parameterValue);
                        }
                        
-                         $scope.orderList= function (orderType, parameterId, parameterValue){
-                      
-                               kendo.mobile.application.navigate("src/app/order/list.html?orderType=" + orderType +"&parameterId=" + parameterId + "&parameterValue=" + parameterValue);
+                       $scope.orderList = function (orderType, parameterId, parameterValue) {
+                           kendo.mobile.application.navigate("src/app/order/list.html?orderType=" + orderType + "&parameterId=" + parameterId + "&parameterValue=" + parameterValue);
                        }
                        
                        $scope.key = function ($event) {
@@ -138,30 +106,27 @@ app.controller('homeController', [
                        }
                        
                        //
-                        $scope.selection=[];
+                       $scope.selection = [];
                        $scope.toggleSelection = function toggleSelection(so) {
                            var idx = $scope.selection.indexOf(so);
-                                                     // is currently selected                          
+                           // is currently selected                          
                            if (idx > -1) {                           
                                $scope.selection.splice(idx, 1);                           
-                           } // is newly selected                           
-                           else {                           
+                           } else {                           
                                $scope.selection.push(so);                           
                            }                           
                        };
-                       $scope.viewAll = function(orderType){
-                             kendo.mobile.application.navigate("src/app/order/order.html?orderType=" + orderType +"&parameterId=" + 1 + "&parameterValue=" + 0 + "&orders=" + $scope.orders);
-                           
+                       $scope.viewAll = function(orderType) {
+                           kendo.mobile.application.navigate("src/app/order/order.html?orderType=" + orderType + "&parameterId=" + 1 + "&parameterValue=" + 0 + "&orders=" + $scope.orders);
                        } 
-                       $scope.approve = function(){
-                         var salesorders = "";
+                       $scope.approve = function() {
+                           var salesorders = "";
 
-                           var salesorderList =  $scope.selection;
+                           var salesorderList = $scope.selection;
                            angular.forEach(salesorderList, function(value, key) {                               
-                              
                                salesorders += value + ',';
                            });
-                         kendo.mobile.application.navigate("src/app/order/approve.html?orders=" + salesorders);
+                           kendo.mobile.application.navigate("src/app/order/approve.html?orders=" + salesorders);
                        }
 
                        //pull to refresh

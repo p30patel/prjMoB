@@ -50,7 +50,8 @@ app.factory("orderDataService", [
                         $http.get(url).success(function (result) {
                             localStorageService.set('orderList' + date, result);
                             deferred.resolve(result);
-                        }).error(function (xhr, status, error) {                                  
+                        }).error(function (xhr, status, error) {  
+                            
                             deferred.reject(error);
                         });
                         return deferred.promise;
@@ -83,7 +84,7 @@ app.factory("orderDataService", [
                         $http.post(url, data).success(function (result) {   
                             alert(result.success);
                             deferred.resolve(result);
-                        }).error(function (xhr, status, error) {                                  
+                        }).error(function (xhr, status, error) {                           
                             deferred.reject(error);
                         });
                         return deferred.promise;

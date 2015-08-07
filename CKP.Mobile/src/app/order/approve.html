@@ -1,9 +1,13 @@
 <kendo-mobile-view k-title="'{{order.title}}'"  k-layout="'other'"  ng-controller="approveController" k-on-show="intShow(kendoEvent)">
 
     <div class='container'>
-Sales Orders : 
+        Sales Orders :
         {{orders}}
     </div>
-<br>
-    <input type="textarea">
+    <br>
+    <textarea row="3" ng-model="order.comment "></textarea>
+    <button ng-click="apporve(true)" ng-disabled="order.hasUpdateStatus">YES</button>
+    <button ng-click="apporve(false)" ng-disabled="order.hasUpdateStatus">No</button>
+    <br>
+    {{order.message }}
 </kendo-mobile-view>

@@ -30,8 +30,7 @@ app.controller('orderlistController', [
                               $scope.order.title = 'Shopping Cart Detail';
                               $scope.order.orderType = orderType;
                               $scope.searchParameterId = parameterId;
-                           alert(orderType + ";" + parameterId + ":" + parameterValue);
-                          
+                         
                            if (orderType === '1'){
                                   $scope.order.hasApproval = true;
                            }
